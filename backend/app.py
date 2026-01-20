@@ -9,6 +9,13 @@ from datetime import datetime, timedelta
 from personas import PERSONAS, get_persona_list
 import gc
 import threading
+import logging
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+# Configure Logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 
 load_dotenv()
@@ -22,6 +29,13 @@ CORS(app, resources={
         "allow_headers": ["Content-Type"]
     }
 })
+
+# Initialize Rate Limiter
+# limiter = Limiter(
+#     key_func=get_remote_address,
+#     default_limits=["1000 per day", "100 per hour"]
+# )
+# limiter.init_app(app)
 
 
 # Initialize API client
@@ -39,6 +53,15 @@ token_usage = {
 
 # Roast Council initialized
 print(f"[INIT] Roast Council loaded: {len(PERSONAS)} personas ready")
+
+# Initialize PersonaManager for backwards compatibility
+try:
+    from personas import PersonaManager
+    persona_manager = PersonaManager()
+except Exception as e:
+    print(f"[WARN] PersonaManager init failed: {e}")
+    persona_manager = None
+# Verified reload trigger
 
 
 # =============================================================================
@@ -429,6 +452,7 @@ conversations = {}
 
 
 @app.route("/api/getResponses", methods=["POST"])
+# @limiter.limit("10 per minute")
 def get_responses():
     """
     Roast Council - Simple parallel execution endpoint.
@@ -452,7 +476,9 @@ def get_responses():
         print(f"[ERROR] Question too long: {len(question)} chars")
         return jsonify({"error": f"Question too long (max {MAX_QUESTION_LENGTH} chars)"}), 400
     
-    print(f"[QUESTION] {question[:100]}...")
+    # Get language from request (default to English)
+    language = data.get("language", "English")
+    print(f"[QUESTION] {question[:100]}... [LANG: {language}]")
     
     # Parallel execution with fallback handling
     results = {}
@@ -462,11 +488,18 @@ def get_responses():
         persona = PERSONAS[persona_id]
         print(f"[{persona['name']}] Calling Groq...")
         
+        # Inject language instruction into system prompt
+        lang_instruction = ""
+        if language.lower() != "english":
+            lang_instruction = f"\n\nIMPORTANT: Reply in {language}. Maintain the persona's tone, but speak {language}."
+            
+        full_system_prompt = persona["system_prompt"] + lang_instruction
+        
         try:
             response = groq_client.chat.completions.create(
                 model="llama-3.3-70b-versatile",
                 messages=[
-                    {"role": "system", "content": persona["system_prompt"]},
+                    {"role": "system", "content": full_system_prompt},
                     {"role": "user", "content": question}
                 ],
                 temperature=0.9,
