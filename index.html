@@ -1,0 +1,2678 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>The Roast Council - System Boot</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#d946ef",
+            "danger-red": "#ef4444",
+            "mom-pastel": "#fca5a5",
+            "hater-neon": "#dc2626",
+            "hater-neon-bright": "#ff003c",
+            "conspiracist-uv": "#a855f7",
+            "hype-volt": "#ccff00",
+            "background-light": "#ffffff",
+            "background-dark": "#050505",
+            "surface-dark": "#0a0a0a",
+            "border-dark": "#27272a",
+            "crt-green": "#33ff00",
+          },
+          fontFamily: {
+            display: ["'Space Mono'", "monospace"],
+            body: ["'Inter'", "sans-serif"],
+          },
+          boxShadow: {
+            'terminal-hater': '0 0 15px rgba(220, 38, 38, 0.3), inset 0 0 20px rgba(220, 38, 38, 0.1)',
+            'terminal-mom': '0 0 15px rgba(252, 165, 165, 0.2), inset 0 0 20px rgba(252, 165, 165, 0.05)',
+            'terminal-hype': '0 0 15px rgba(204, 255, 0, 0.25), inset 0 0 20px rgba(204, 255, 0, 0.1)',
+            'terminal-conspiracist': '0 0 15px rgba(168, 85, 247, 0.25), inset 0 0 20px rgba(168, 85, 247, 0.1)',
+            'glow': '0 0 10px var(--tw-shadow-color), 0 0 20px var(--tw-shadow-color)',
+            'win95': '1px 1px 0px #fff, -1px -1px 0px #808080, 2px 2px 0px #000, -2px -2px 0px #dfdfdf',
+            'win95-inset': 'inset 1px 1px 0px #000, inset -1px -1px 0px #fff, inset 2px 2px 0px #808080, inset -2px -2px 0px #dfdfdf',
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'typewriter': 'typewriter 2s steps(40) 1s 1 normal both',
+            'blink-caret': 'blink-caret .75s step-end infinite',
+            'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both infinite',
+            'scan': 'scan 4s linear infinite',
+            'flicker': 'flicker 0.15s infinite',
+            'power-on': 'powerOn 2s ease-out forwards',
+            'power-off': 'powerOff 1s ease-in forwards',
+          },
+          keyframes: {
+            typewriter: {
+              '0%': { width: '0%' },
+              '100%': { width: '100%' },
+            },
+            'blink-caret': {
+              'from, to': { borderColor: 'transparent' },
+              '50%': { borderColor: 'currentColor' },
+            },
+            shake: {
+              '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+              '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+              '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+              '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+            },
+            scan: {
+              '0%': { backgroundPosition: '0% 0%' },
+              '100%': { backgroundPosition: '0% 100%' }
+            },
+            flicker: {
+              '0%': { opacity: '0.9' },
+              '5%': { opacity: '1' },
+              '10%': { opacity: '0.9' },
+              '15%': { opacity: '1' },
+              '20%': { opacity: '1' },
+              '50%': { opacity: '0.9' },
+              '100%': { opacity: '1' }
+            },
+            powerOn: {
+              '0%': { transform: 'scaleY(0.005) scaleX(0)', opacity: '0', filter: 'brightness(10)' },
+              '20%': { transform: 'scaleY(0.005) scaleX(1)', opacity: '1', filter: 'brightness(5)' },
+              '50%': { transform: 'scaleY(1) scaleX(1)', opacity: '1', filter: 'brightness(2)' },
+              '100%': { transform: 'scaleY(1) scaleX(1)', opacity: '1', filter: 'brightness(1)' }
+            },
+            powerOff: {
+              '0%': { transform: 'scaleY(1) scaleX(1)', opacity: '1', filter: 'brightness(1)' },
+              '40%': { transform: 'scaleY(0.005) scaleX(1)', opacity: '1', filter: 'brightness(2)' },
+              '100%': { transform: 'scaleY(0.005) scaleX(0)', opacity: '0', filter: 'brightness(0)' }
+            }
+          }
+        },
+      },
+    };
+  </script>
+  <style>
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #050505;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d946ef;
+    }
+
+    /* GLITCH EFFECT - SIMPLE */
+    .glitch {
+      position: relative;
+      text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff;
+      animation: glitch-simple 3s infinite;
+    }
+
+    @keyframes glitch-simple {
+
+      0%,
+      90%,
+      100% {
+        text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff;
+        transform: translate(0);
+      }
+
+      92% {
+        text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff;
+        transform: translate(-2px, 1px);
+      }
+
+      94% {
+        text-shadow: 2px 0 #00ffff, -2px 0 #ff00ff;
+        transform: translate(2px, -1px);
+      }
+
+      96% {
+        text-shadow: -1px 0 #ff00ff, 1px 0 #00ffff;
+        transform: translate(1px, 1px);
+      }
+
+      98% {
+        text-shadow: 1px 0 #00ffff, -1px 0 #ff00ff;
+        transform: translate(-1px, -1px);
+      }
+    }
+
+    .crt-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .crt-overlay {
+      background: radial-gradient(circle, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 100%),
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      background-size: 100% 3px, 100% 3px, 3px 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 100;
+      animation: flicker 0.15s infinite;
+      opacity: 0.25;
+    }
+
+    .crt-scanline {
+      width: 100%;
+      height: 100px;
+      z-index: 101;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(0, 0, 0, 0) 100%);
+      opacity: 0.1;
+      position: absolute;
+      bottom: 100%;
+      animation: scanline 10s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes scanline {
+      0% {
+        bottom: 100%;
+      }
+
+      100% {
+        bottom: -100px;
+      }
+    }
+
+    .input-scanlines {
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.1) 2px,
+          rgba(0, 0, 0, 0.1) 4px);
+      pointer-events: none;
+    }
+
+    .dark .input-scanlines {
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(255, 255, 255, 0.03) 2px,
+          rgba(255, 255, 255, 0.03) 4px);
+    }
+
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -1px 0 #ff00c1;
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: -1px 0 #00fff9;
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% {
+        clip: rect(30px, 9999px, 10px, 0);
+      }
+
+      5% {
+        clip: rect(80px, 9999px, 5px, 0);
+      }
+
+      10% {
+        clip: rect(10px, 9999px, 90px, 0);
+      }
+
+      15% {
+        clip: rect(50px, 9999px, 20px, 0);
+      }
+
+      20% {
+        clip: rect(10px, 9999px, 100px, 0);
+      }
+
+      100% {
+        clip: rect(0, 0, 0, 0);
+      }
+    }
+
+    @keyframes glitch-anim2 {
+      0% {
+        clip: rect(10px, 9999px, 80px, 0);
+      }
+
+      5% {
+        clip: rect(90px, 9999px, 10px, 0);
+      }
+
+      10% {
+        clip: rect(30px, 9999px, 5px, 0);
+      }
+
+      15% {
+        clip: rect(60px, 9999px, 40px, 0);
+      }
+
+      20% {
+        clip: rect(20px, 9999px, 70px, 0);
+      }
+
+      100% {
+        clip: rect(0, 0, 0, 0);
+      }
+    }
+
+    .blinking-cursor::after {
+      content: '_';
+      display: inline-block;
+      animation: blink-caret .75s step-end infinite;
+      color: #ef4444;
+      margin-left: 2px;
+    }
+
+    .boot-cursor::after {
+      content: '█';
+      display: inline-block;
+      animation: blink-caret 0.5s step-end infinite;
+      color: #33ff00;
+      margin-left: 2px;
+    }
+
+    .cursor-hater::after {
+      color: #dc2626;
+      content: '█';
+      animation: blink-caret 0.5s step-end infinite;
+    }
+
+    .cursor-mom::after {
+      color: #fca5a5;
+      content: '♥';
+      animation: blink-caret 1s ease-in-out infinite;
+      font-size: 0.8em;
+      vertical-align: middle;
+    }
+
+    .cursor-hype::after {
+      color: #ccff00;
+      content: '_';
+      animation: blink-caret 0.1s step-end infinite;
+      font-weight: 900;
+    }
+
+    .cursor-conspiracist::after {
+      color: #a855f7;
+      content: '?';
+      animation: blink-caret 2s steps(2) infinite;
+    }
+
+    .hater-terminal.in-view {
+      animation: hater-pulse-border 2s infinite;
+    }
+
+    .hater-terminal.in-view .anger-bar-fill {
+      animation: anger-surge 0.2s infinite alternate;
+    }
+
+    @keyframes hater-pulse-border {
+      0% {
+        box-shadow: 0 0 0 rgba(220, 38, 38, 0.4);
+        border-color: #dc2626;
+      }
+
+      50% {
+        box-shadow: 0 0 15px rgba(255, 0, 60, 0.3);
+        border-color: #ff003c;
+      }
+
+      100% {
+        box-shadow: 0 0 0 rgba(220, 38, 38, 0.4);
+        border-color: #dc2626;
+      }
+    }
+
+    @keyframes anger-surge {
+      0% {
+        width: 90%;
+        opacity: 0.8;
+      }
+
+      100% {
+        width: 100%;
+        opacity: 1;
+      }
+    }
+
+    .hype-terminal.in-view {
+      box-shadow: 0 0 10px rgba(204, 255, 0, 0.2);
+    }
+
+    .hype-terminal.in-view .hype-text {
+      animation: text-vibrate 0.3s linear infinite;
+    }
+
+    .hype-terminal.in-view .hype-bar-fill {
+      animation: hype-rainbow 0.5s linear infinite;
+    }
+
+    @keyframes text-vibrate {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      25% {
+        transform: translate(1px, 1px);
+      }
+
+      50% {
+        transform: translate(0, 0);
+      }
+
+      75% {
+        transform: translate(-1px, -1px);
+      }
+
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes hype-rainbow {
+      0% {
+        background-color: #ccff00;
+      }
+
+      50% {
+        background-color: #fff;
+      }
+
+      100% {
+        background-color: #ccff00;
+      }
+    }
+
+    .mom-terminal.in-view {
+      transition: all 1s ease;
+    }
+
+    .mom-terminal.in-view .care-heart {
+      animation: mom-heartbeat 1.5s infinite ease-in-out;
+    }
+
+    @keyframes mom-heartbeat {
+      0% {
+        transform: scale(1);
+      }
+
+      14% {
+        transform: scale(1.2);
+      }
+
+      28% {
+        transform: scale(1);
+      }
+
+      42% {
+        transform: scale(1.2);
+      }
+
+      70% {
+        transform: scale(1);
+      }
+    }
+
+    .conspiracist-terminal.in-view .encrypted-text {
+      animation: glitch-text 2s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-text {
+      0% {
+        opacity: 1;
+        transform: skewX(0deg);
+      }
+
+      5% {
+        opacity: 0.8;
+        transform: skewX(20deg);
+      }
+
+      10% {
+        opacity: 1;
+        transform: skewX(0deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform: skewX(0deg);
+      }
+    }
+
+    /* Main interface content starts hidden */
+    #main-interface .screen-content {
+      opacity: 0;
+      display: flex !important;
+      transition: opacity 1s ease-out;
+    }
+
+    /* Boot screen content is visible by default */
+    #boot-screen .screen-content {
+      opacity: 1 !important;
+      display: flex !important;
+    }
+
+    .screen-on {
+      display: block;
+      animation: power-on 3s ease-out forwards;
+    }
+
+    .screen-off-anim {
+      animation: power-off 1.5s ease-in forwards;
+    }
+
+    .type-out {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: .15em solid transparent;
+    }
+
+    .win95-btn:active {
+      box-shadow: var(--box-shadow-win95-inset);
+      transform: translate(1px, 1px);
+    }
+
+    /* Malware Attack Animation */
+    @keyframes malware-attack {
+      0% {
+        transform: scale(0.5) rotate(-5deg);
+        opacity: 0;
+        filter: blur(10px);
+      }
+
+      50% {
+        transform: scale(1.05) rotate(2deg);
+        opacity: 1;
+        filter: blur(0);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+
+    .malware-reveal {
+      animation: malware-attack 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    .persona-card {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.5s ease-out;
+    }
+
+    .persona-card.attack-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* OS WINDOW FRAME */
+    .os-window {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      background: #000;
+      position: relative;
+    }
+
+    .os-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+      border-bottom: 1px solid #333;
+      padding: 6px 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: #d946ef;
+      flex-shrink: 0;
+    }
+
+    .os-title-bar .title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .os-title-bar .title::before {
+      content: '>';
+      color: #d946ef;
+      animation: blink-caret 1s step-end infinite;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .window-controls button {
+      width: 16px;
+      height: 16px;
+      border: 1px solid #444;
+      background: #222;
+      color: #888;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .window-controls button:hover {
+      background: #333;
+      color: #fff;
+    }
+
+    .window-controls .close:hover {
+      background: #dc2626;
+      border-color: #dc2626;
+    }
+
+    /* STATUS BAR */
+    .os-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a0a;
+      border-top: 1px solid #27272a;
+      padding: 4px 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: #d946ef;
+      flex-shrink: 0;
+    }
+
+    .os-status-bar .status-left,
+    .os-status-bar .status-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .os-status-bar .indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .os-status-bar .dot {
+      width: 6px;
+      height: 6px;
+      background: #d946ef;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #d946ef;
+      animation: pulse 2s infinite;
+    }
+
+    /* PHOSPHOR GLOW */
+    .phosphor-glow {
+      text-shadow: 0 0 2px currentColor, 0 0 8px rgba(217, 70, 239, 0.3);
+    }
+
+    /* ENHANCED VIGNETTE */
+    .vignette-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 99;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+    }
+
+    /* SCREEN CURVATURE */
+    .screen-curve {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 98;
+      box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+    }
+
+    /* STATIC FLICKER */
+    @keyframes static-flicker {
+
+      0%,
+      97% {
+        opacity: 0;
+      }
+
+      97.5% {
+        opacity: 0.015;
+      }
+
+      98% {
+        opacity: 0;
+      }
+    }
+
+    .static-noise {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 97;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0;
+      animation: static-flicker 8s infinite;
+    }
+
+    /* ASCII TITLE STYLING */
+    .ascii-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      line-height: 1.1;
+      color: #d946ef;
+      white-space: pre;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .ascii-title {
+        font-size: 14px;
+      }
+    }
+
+    .system-info {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: #666;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    /* TERMINAL INPUT STYLING */
+    .terminal-prompt {
+      background: #0a0a0a;
+      border: 1px solid #27272a;
+      padding: 16px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .terminal-prompt .path {
+      color: #d946ef;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .terminal-prompt input {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      width: 100%;
+      outline: none;
+      padding: 8px 0;
+    }
+
+    .terminal-prompt input::placeholder {
+      color: #666;
+    }
+
+    .run-btn {
+      background: #d946ef;
+      border: none;
+      color: #000;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .run-btn:hover {
+      background: #e879f9;
+      box-shadow: 0 0 15px rgba(217, 70, 239, 0.5);
+    }
+
+    .run-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* HOVER GLITCH EFFECT */
+    .glitch-hover {
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .glitch-hover:hover {
+      animation: glitch-skew 0.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-skew {
+      0% {
+        transform: skew(0deg);
+      }
+
+      20% {
+        transform: skew(-2deg);
+      }
+
+      40% {
+        transform: skew(1deg);
+      }
+
+      60% {
+        transform: skew(-1deg);
+      }
+
+      80% {
+        transform: skew(2deg);
+      }
+
+      100% {
+        transform: skew(0deg);
+      }
+    }
+
+    /* DECRYPT TEXT ANIMATION */
+    .decrypt-text {
+      position: relative;
+    }
+
+    .decrypt-text:hover {
+      animation: decrypt-flicker 0.3s ease-in-out;
+    }
+
+    @keyframes decrypt-flicker {
+      0% {
+        opacity: 1;
+        filter: blur(0);
+      }
+
+      25% {
+        opacity: 0.8;
+        filter: blur(1px);
+        color: #00fff9;
+      }
+
+      50% {
+        opacity: 0.9;
+        filter: blur(0.5px);
+        color: #ff00c1;
+      }
+
+      75% {
+        opacity: 0.85;
+        filter: blur(1px);
+        color: #a855f7;
+      }
+
+      100% {
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+
+    /* OS TITLE BAR - Updated colors */
+    .os-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+      border-bottom: 1px solid #27272a;
+      padding: 6px 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: #10b981;
+      flex-shrink: 0;
+    }
+
+    .os-title-bar .title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .os-title-bar .title::before {
+      content: '>';
+      color: #10b981;
+      animation: blink-caret 1s step-end infinite;
+    }
+
+    /* OS STATUS BAR - Updated colors */
+    .os-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a0a;
+      border-top: 1px solid #27272a;
+      padding: 4px 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: #10b981;
+      flex-shrink: 0;
+    }
+
+    .os-status-bar .dot {
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    /* SHUTDOWN TERMINAL ANIMATION */
+    @keyframes terminal-close {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+        filter: brightness(1);
+      }
+
+      30% {
+        transform: scale(1.02);
+        filter: brightness(1.5);
+      }
+
+      100% {
+        transform: scaleY(0.01) scaleX(0);
+        opacity: 0;
+        filter: brightness(0);
+      }
+    }
+
+    .terminal-closing {
+      animation: terminal-close 0.6s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+      pointer-events: none;
+    }
+
+    /* Input terminal closing */
+    @keyframes input-terminal-close {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(0.95);
+        filter: brightness(2);
+      }
+
+      100% {
+        transform: scaleY(0.005) scaleX(0.8);
+        opacity: 0;
+        filter: brightness(0);
+      }
+    }
+
+    .input-closing {
+      animation: input-terminal-close 0.8s ease-in forwards;
+    }
+
+    /* Screen off effect */
+    @keyframes screen-shutdown {
+      0% {
+        opacity: 1;
+        filter: brightness(1);
+      }
+
+      50% {
+        filter: brightness(3);
+        background: white;
+      }
+
+      80% {
+        transform: scaleY(0.003);
+        filter: brightness(10);
+      }
+
+      100% {
+        transform: scaleY(0);
+        opacity: 0;
+        filter: brightness(0);
+      }
+    }
+
+    .screen-shutting-down {
+      animation: screen-shutdown 1.2s ease-in forwards;
+    }
+  </style>
+</head>
+
+<body class="bg-[#020202] text-zinc-200 min-h-screen font-display selection:bg-primary selection:text-white">
+  <div class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black transition-opacity duration-1000"
+    id="landing-screen">
+    <button class="group relative flex flex-col items-center justify-center focus:outline-none" id="power-icon"
+      onclick="startBootSequence()">
+      <div
+        class="relative w-24 h-24 rounded-full border-2 border-zinc-800 bg-zinc-900 flex items-center justify-center shadow-lg transition-all duration-500 group-hover:border-zinc-700">
+        <div class="absolute inset-0 rounded-full opacity-0 transition-opacity duration-1000 shadow-[0_0_30px_#33ff00]"
+          id="power-glow"></div>
+        <span
+          class="material-symbols-outlined text-5xl text-zinc-700 transition-colors duration-500 group-hover:text-zinc-500 opacity-0"
+          style="font-variation-settings: 'wght' 200;">power_settings_new</span>
+      </div>
+      <span
+        class="mt-8 text-zinc-600 font-display text-sm tracking-[0.2em] uppercase opacity-50 group-hover:opacity-100 transition-opacity duration-500">Press
+        to boot system</span>
+    </button>
+  </div>
+  <div
+    class="os-window hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-5xl h-[85vh] border border-zinc-800 rounded-lg shadow-2xl flex flex-col z-[60] bg-black overflow-hidden"
+    id="boot-screen">
+    <!-- CRT Effects Layer - ABSOLUTE positioning relative to boot-screen -->
+    <div class="crt-overlay pointer-events-none absolute inset-0 z-10"></div>
+    <div class="crt-scanline absolute inset-0 z-10 pointer-events-none"></div>
+    <div class="vignette-overlay absolute inset-0 z-10 pointer-events-none"></div>
+    <div class="screen-curve absolute inset-0 z-10 pointer-events-none"></div>
+    <div class="static-noise absolute inset-0 z-10 pointer-events-none"></div>
+
+    <!-- OS Title Bar -->
+    <div class="os-title-bar relative z-20">
+      <div class="title phosphor-glow text-green-500" id="boot-title">SYSTEM BOOT // BIOS v3.2.1</div>
+      <div class="window-controls flex gap-2 group">
+        <button onclick="bootClose()"
+          class="w-3 h-3 rounded-full bg-[#ff5f56] hover:brightness-90 transition-all shadow-glow-red flex items-center justify-center text-[8px] font-bold text-black/50 opacity-100 hover:text-black"
+          title="Close"><span class="opacity-0 group-hover:opacity-100">✕</span></button>
+        <button onclick="bootMinimize()"
+          class="w-3 h-3 rounded-full bg-[#ffbd2e] hover:brightness-90 transition-all shadow-glow-yellow flex items-center justify-center text-[8px] font-bold text-black/50 opacity-100 hover:text-black"
+          title="Minimize"><span class="opacity-0 group-hover:opacity-100">−</span></button>
+        <button onclick="bootMaximize()"
+          class="w-3 h-3 rounded-full bg-[#27c93f] hover:brightness-90 transition-all shadow-glow-green flex items-center justify-center text-[6px] font-bold text-black/50 opacity-100 hover:text-black"
+          title="Maximize"><span class="opacity-0 group-hover:opacity-100">▲</span></button>
+      </div>
+    </div>
+
+    <!-- Boot Content Area -->
+    <div
+      class="screen-content flex-1 overflow-y-auto bg-transparent text-green-500 font-mono text-sm md:text-base leading-relaxed p-8 relative z-20"
+      id="boot-content-area">
+      <div class="max-w-4xl mx-auto space-y-1" id="boot-text"></div>
+    </div>
+  </div>
+  <div class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden"
+    id="shutdown-dialog">
+    <div
+      class="w-[400px] bg-[#c0c0c0] shadow-win95 p-1 border-2 border-[#dfdfdf] border-r-black border-b-black relative">
+      <div class="bg-[#000080] text-white px-2 py-1 flex justify-between items-center font-bold text-sm select-none">
+        <span>System Halt</span>
+        <button
+          class="bg-[#c0c0c0] text-black w-5 h-5 flex items-center justify-center text-xs shadow-win95 active:shadow-win95-inset"
+          onclick="cancelShutdown()">✕</button>
+      </div>
+      <div class="p-6 flex flex-col gap-6 text-black font-sans">
+        <div class="flex gap-4 items-start">
+          <span class="material-symbols-outlined text-4xl text-[#ffcc00]">warning</span>
+          <div>
+            <p class="font-bold mb-1">Shut Down Roast Council?</p>
+            <p class="text-sm">Are you sure you want to turn off this machine?<br />All unsaved roasts will be lost.</p>
+          </div>
+        </div>
+        <div class="flex justify-end gap-4 mt-2">
+          <button
+            class="px-6 py-1.5 border-2 border-black border-t-white border-l-white bg-[#c0c0c0] active:border-t-black active:border-l-black active:border-b-white active:border-r-white focus:outline-dotted outline-1"
+            onclick="confirmShutdown()">Yes, Shut Down</button>
+          <button
+            class="px-6 py-1.5 border-2 border-black border-t-white border-l-white bg-[#c0c0c0] active:border-t-black active:border-l-black active:border-b-white active:border-r-white focus:outline-dotted outline-1"
+            onclick="cancelShutdown()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generic System Dialog (Terminal Style) -->
+  <div class="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden"
+    id="system-dialog">
+    <div
+      class="w-[480px] bg-black border-2 border-primary shadow-[0_0_30px_rgba(217,70,239,0.3)] relative animate-shake"
+      style="animation-iteration-count: 1; animation-duration: 0.3s;">
+      <!-- Terminal Title Bar -->
+      <div
+        class="bg-primary/20 border-b border-primary/50 px-3 py-2 flex justify-between items-center text-sm select-none">
+        <div class="flex items-center gap-2">
+          <span class="text-primary animate-pulse">▶</span>
+          <span class="text-primary font-bold tracking-wider phosphor-glow" id="dialog-title">SYSTEM ALERT</span>
+        </div>
+        <button class="text-primary hover:text-white transition-colors font-display" onclick="closeSystemDialog()">[ ✕
+          ]</button>
+      </div>
+
+      <!-- Dialog Content -->
+      <div class="p-6">
+        <div class="flex gap-4 items-start">
+          <span class="material-symbols-outlined text-5xl phosphor-glow" id="dialog-icon"
+            style="color: #d946ef;">warning</span>
+          <div class="flex-1">
+            <div class="text-zinc-500 text-xs mb-2 font-mono">> SYSTEM_MESSAGE:</div>
+            <p class="text-primary font-bold text-sm mb-3 phosphor-glow" id="dialog-heading">Alert</p>
+            <p class="text-zinc-300 text-sm leading-relaxed font-mono whitespace-pre-line" id="dialog-message">Message
+              goes here</p>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-6">
+          <button
+            class="bg-primary/20 border border-primary text-primary hover:bg-primary hover:text-black px-6 py-2 text-xs font-bold tracking-wider transition-all font-display"
+            onclick="closeSystemDialog()">[ ACKNOWLEDGE ]</button>
+        </div>
+      </div>
+
+      <!-- Scanline effect -->
+      <div class="absolute inset-0 pointer-events-none opacity-10"
+        style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);">
+      </div>
+    </div>
+  </div>
+  <div class="os-window hidden" id="main-interface">
+    <!-- CRT Effects Layer -->
+    <div class="crt-overlay pointer-events-none fixed inset-0 z-50"></div>
+    <div class="crt-scanline fixed inset-0 z-50 pointer-events-none"></div>
+    <div class="vignette-overlay"></div>
+    <div class="screen-curve"></div>
+    <div class="static-noise"></div>
+
+    <!-- OS Title Bar -->
+    <div class="os-title-bar">
+      <div class="title phosphor-glow decrypt-text text-red-500">⚠ SYSTEM COMPROMISED - ENTITIES ACTIVE</div>
+
+      <!-- Language Button (User Requested) -->
+      <div class="absolute right-4 top-1 z-50">
+        <button id="lang-btn" aria-label="Language" type="button" onclick="toggleLanguageMenu()"
+          class="border border-zinc-800 text-zinc-500 hover:border-zinc-600 hover:text-primary hover:bg-zinc-900 bg-black shadow-subtle font-sans focus:outline-none outline-none transition duration-300 ease-out select-none items-center relative group/button justify-center text-center rounded-full cursor-pointer active:scale-[0.97] origin-center whitespace-nowrap inline-flex text-sm h-6 w-6">
+          <div class="flex items-center min-w-0 gap-two justify-center">
+            <div class="flex shrink-0 items-center justify-center size-4">
+              <svg role="img" class="inline-flex fill-current" viewBox="0 0 24 24" width="14" height="14">
+                <path
+                  d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" />
+              </svg>
+            </div>
+          </div>
+        </button>
+        <!-- hidden menu -->
+        <div id="lang-menu"
+          class="hidden absolute right-0 top-8 w-32 bg-black border border-primary/30 shadow-[0_0_15px_rgba(217,70,239,0.2)] rounded z-50 flex flex-col font-mono text-xs">
+          <button onclick="setLanguage('English')"
+            class="text-left px-3 py-2 hover:bg-primary/20 text-zinc-300 hover:text-white transition-colors">ENGLISH</button>
+          <button onclick="setLanguage('Hindi')"
+            class="text-left px-3 py-2 hover:bg-primary/20 text-zinc-300 hover:text-white transition-colors">HINDI</button>
+          <button onclick="setLanguage('Malayalam')"
+            class="text-left px-3 py-2 hover:bg-primary/20 text-zinc-300 hover:text-white transition-colors">MALAYALAM</button>
+          <button onclick="setLanguage('Chinese')"
+            class="text-left px-3 py-2 hover:bg-primary/20 text-zinc-300 hover:text-white transition-colors">CHINESE</button>
+          <button onclick="setLanguage('Korean')"
+            class="text-left px-3 py-2 hover:bg-primary/20 text-zinc-300 hover:text-white transition-colors">KOREAN</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="screen-content flex-1 overflow-y-auto bg-black text-zinc-200 font-display">
+      <div class="w-full px-4 sm:px-6 lg:px-8 py-2 flex flex-col items-center">
+
+        <!-- Title Section - ASCII TERMINAL STYLE with GLITCH -->
+        <div class="text-center mb-2 w-full">
+          <pre
+            class="font-display text-[8px] sm:text-[10px] md:text-xs leading-tight whitespace-pre text-center glitch relative"
+            data-text="ROAST"
+            style="background: linear-gradient(180deg, #fff 0%, #d946ef 50%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+████████╗██╗  ██╗███████╗
+╚══██╔══╝██║  ██║██╔════╝
+   ██║   ███████║█████╗  
+   ██║   ██╔══██║██╔══╝  
+   ██║   ██║  ██║███████╗
+   ╚═╝   ╚═╝  ╚═╝╚══════╝
+██████╗  ██████╗  █████╗ ███████╗████████╗
+██╔══██╗██╔═══██╗██╔══██╗██╔════╝╚══██╔══╝
+██████╔╝██║   ██║███████║███████╗   ██║   
+██╔══██╗██║   ██║██╔══██║╚════██║   ██║   
+██║  ██║╚██████╔╝██║  ██║███████║   ██║   
+╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝   
+ ██████╗ ██████╗ ██╗   ██╗███╗   ██╗ ██████╗██╗██╗     
+██╔════╝██╔═══██╗██║   ██║████╗  ██║██╔════╝██║██║     
+██║     ██║   ██║██║   ██║██╔██╗ ██║██║     ██║██║     
+██║     ██║   ██║██║   ██║██║╚██╗██║██║     ██║██║     
+╚██████╗╚██████╔╝╚██████╔╝██║ ╚████║╚██████╗██║███████╗
+ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝╚══════╝</pre>
+          <div class="mt-3 font-mono text-sm">
+            <span class="text-zinc-500">[</span>
+            <span class="text-primary font-bold">4 AI PERSONAS</span>
+            <span class="text-zinc-500">]</span>
+            <span class="mx-2 text-zinc-600">::</span>
+            <span class="text-zinc-400">NO FILTERS</span>
+            <span class="mx-2 text-zinc-600">::</span>
+            <span class="text-hater-neon">BRUTAL HONESTY</span>
+          </div>
+        </div>
+
+        <!-- Input Section - ORIGINAL DESIGN with gradient border -->
+        <div class="w-full max-w-3xl mb-3 relative group">
+          <!-- Window Controls for Terminal (Mac Style) -->
+          <div class="absolute top-4 right-4 z-30 flex gap-2 group">
+            <button onclick="triggerShutdown()"
+              class="w-3 h-3 rounded-full bg-[#ff5f56] hover:brightness-90 transition-all shadow-glow-red flex items-center justify-center text-[8px] font-bold text-black/50 opacity-100 hover:text-black"
+              title="Close"><span class="opacity-0 group-hover:opacity-100">✕</span></button>
+            <button onclick="mainMinimize()"
+              class="w-3 h-3 rounded-full bg-[#ffbd2e] hover:brightness-90 transition-all shadow-glow-yellow flex items-center justify-center text-[8px] font-bold text-black/50 opacity-100 hover:text-black"
+              title="Minimize"><span class="opacity-0 group-hover:opacity-100">−</span></button>
+            <button onclick="mainMaximize()"
+              class="w-3 h-3 rounded-full bg-[#27c93f] hover:brightness-90 transition-all shadow-glow-green flex items-center justify-center text-[6px] font-bold text-black/50 opacity-100 hover:text-black"
+              title="Maximize"><span class="opacity-0 group-hover:opacity-100">▲</span></button>
+          </div>
+          <div
+            class="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200">
+          </div>
+          <div class="relative bg-zinc-950 border border-zinc-800 rounded-lg p-4 md:p-5 shadow-2xl overflow-hidden">
+            <div class="absolute inset-0 input-scanlines pointer-events-none z-10 opacity-30"></div>
+            <div class="flex items-center gap-2 mb-4 opacity-70 relative z-20">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+              <div class="overflow-hidden whitespace-nowrap ml-2 border-r-2 border-transparent pr-1">
+                <span
+                  class="text-xs font-display text-green-500/80 animate-typewriter inline-block overflow-hidden whitespace-nowrap align-bottom w-[24ch]"
+                  style="animation: typewriter 2s steps(28) 0.5s 1 normal both;">root@roast-council:~#
+                  input_query</span>
+              </div>
+            </div>
+            <label
+              class="relative z-20 block text-xs font-bold text-red-500/80 mb-2 uppercase tracking-widest font-display"
+              for="roast-input">
+              ⚠ TRANSMISSION TO HOSTILE ENTITIES:
+            </label>
+            <div class="flex flex-col md:flex-row gap-4 relative z-20">
+              <div class="relative flex-1">
+                <input
+                  class="w-full bg-black/50 border border-zinc-700 rounded p-4 font-display text-sm md:text-base text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-zinc-500"
+                  id="roast-input" placeholder="Speak, human. What troubles you?" type="text" value=""
+                  onkeypress="if(event.key === 'Enter') askCouncil()" />
+                <div
+                  class="absolute top-1/2 -translate-y-1/2 right-4 pointer-events-none blinking-cursor text-danger-red text-xl">
+                </div>
+              </div>
+              <button
+                class="bg-[#ef4444] hover:bg-red-500 text-white font-display font-bold px-8 py-4 rounded shadow-glow-danger hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 whitespace-nowrap flex items-center justify-center gap-2"
+                onclick="askCouncil()">
+                <span class="material-symbols-outlined text-lg">send</span>
+                TRANSMIT
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Persona Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full hidden opacity-0 scale-90" id="persona-grid"
+          style="transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);">
+          <div class="observe-me mom-terminal group relative h-full persona-card" data-shutdown-delay="100">
+            <div
+              class="absolute inset-0 bg-mom-pastel/10 blur-xl opacity-0 group-hover:opacity-100 transition duration-500">
+            </div>
+            <div
+              class="relative h-full bg-black border border-mom-pastel/30 p-1 shadow-terminal-mom rounded-sm overflow-hidden flex flex-col font-display transition-opacity duration-1000">
+              <div
+                class="bg-mom-pastel/10 border-b border-mom-pastel/30 p-2 flex justify-between items-center text-[10px] text-mom-pastel tracking-wider">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm care-heart">favorite</span>
+                  <span class="phosphor-glow">SYS.MOM.V2</span>
+                </div>
+                <span>STATUS: WORRIED</span>
+              </div>
+              <div class="p-4 md:p-6 text-sm text-mom-pastel/90 relative flex-grow flex flex-col">
+                <div
+                  class="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] opacity-20">
+                </div>
+                <div class="mb-6 font-mono text-xs">
+                  <div class="flex justify-between mb-1">
+                    <span>care_level</span>
+                    <span>100%</span>
+                  </div>
+                  <div class="w-full bg-mom-pastel/20 h-2 p-[1px]">
+                    <div class="h-full bg-mom-pastel w-full shadow-[0_0_8px_rgba(252,165,165,0.8)]"></div>
+                  </div>
+                </div>
+                <div class="space-y-4 font-mono z-10">
+                  <div class="opacity-60 text-xs text-mom-log">
+                    &gt; system_idle...
+                  </div>
+                  <div class="pl-3 border-l-2 border-mom-pastel/50 py-1">
+                    <span class="block mb-2 text-xs opacity-80">&gt; INCOMING_MESSAGE:</span>
+                    <span class="response-content"></span><span class="cursor-mom inline-block ml-1"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="observe-me hater-terminal group relative h-full persona-card" data-shutdown-delay="300">
+            <div
+              class="absolute inset-0 bg-hater-neon/10 blur-xl opacity-0 group-hover:opacity-100 transition duration-500">
+            </div>
+            <div
+              class="relative h-full bg-black border border-hater-neon/50 p-1 shadow-terminal-hater rounded-sm overflow-hidden flex flex-col font-display transition-opacity duration-1000">
+              <div
+                class="bg-hater-neon/10 border-b border-hater-neon/30 p-2 flex justify-between items-center text-[10px] text-hater-neon tracking-wider">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm">warning</span>
+                  <span class="phosphor-glow">ROOT@HATER-BOT</span>
+                </div>
+                <span class="animate-pulse">PID: 666</span>
+              </div>
+              <div class="p-4 md:p-6 text-sm text-hater-neon relative flex-grow flex flex-col">
+                <div
+                  class="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] opacity-20">
+                </div>
+                <div class="mb-6 font-mono text-xs">
+                  <div class="flex justify-between mb-1 uppercase">
+                    <span>anger_level</span>
+                    <span class="font-bold text-hater-neon-bright animate-pulse">CRITICAL</span>
+                  </div>
+                  <div class="w-full border border-hater-neon/40 h-3 p-[2px] bg-red-950/30">
+                    <div class="anger-bar-fill h-full bg-hater-neon w-[92%] shadow-[0_0_10px_rgba(220,38,38,0.8)]">
+                    </div>
+                  </div>
+                </div>
+                <div class="space-y-4 font-mono z-10">
+                  <div class="opacity-70 text-xs text-hater-log">
+                    &gt; system_idle...
+                  </div>
+                  <div class="bg-hater-neon/5 border-l-4 border-hater-neon p-3">
+                    <span class="mr-2 text-hater-neon-bright">$</span><span class="response-content"></span><span
+                      class="cursor-hater inline-block ml-1"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="observe-me conspiracist-terminal group relative h-full persona-card" data-shutdown-delay="500">
+            <div
+              class="absolute inset-0 bg-conspiracist-uv/10 blur-xl opacity-0 group-hover:opacity-100 transition duration-500">
+            </div>
+            <div
+              class="relative h-full bg-black border border-conspiracist-uv/40 p-1 shadow-terminal-conspiracist rounded-sm overflow-hidden flex flex-col font-display transition-opacity duration-1000">
+              <div
+                class="bg-conspiracist-uv/10 border-b border-conspiracist-uv/30 p-2 flex justify-between items-center text-[10px] text-conspiracist-uv tracking-wider">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm">visibility_off</span>
+                  <span class="phosphor-glow">ENCRYPTED_CONNECTION</span>
+                </div>
+                <span>TOR_NODE_42</span>
+              </div>
+              <div class="p-4 md:p-6 text-sm text-conspiracist-uv relative flex-grow flex flex-col">
+                <div
+                  class="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] opacity-20">
+                </div>
+                <div class="mb-6 font-mono text-xs">
+                  <div class="flex justify-between mb-1 uppercase">
+                    <span>alert_level</span>
+                    <span>WATCHING</span>
+                  </div>
+                  <div class="w-full bg-conspiracist-uv/10 h-2 flex gap-[2px]">
+                    <div class="h-full bg-conspiracist-uv w-1/5 opacity-40"></div>
+                    <div class="h-full bg-conspiracist-uv w-1/5 opacity-60"></div>
+                    <div class="h-full bg-conspiracist-uv w-1/5 opacity-80"></div>
+                    <div class="h-full bg-conspiracist-uv w-1/5 opacity-100"></div>
+                    <div class="h-full bg-conspiracist-uv w-1/5 opacity-100 animate-pulse"></div>
+                  </div>
+                </div>
+                <div class="space-y-4 font-mono z-10">
+                  <div class="opacity-70 text-xs text-conspiracist-log">
+                    &gt; system_idle...
+                  </div>
+                  <div class="border border-conspiracist-uv/30 p-3 bg-black/40">
+                    <span
+                      class="block mb-2 text-xs text-white/50 border-b border-zinc-800 pb-1">DECRYPTED_PAYLOAD:</span>
+                    <span class="response-content"></span><span class="cursor-conspiracist inline-block ml-1"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="observe-me hype-terminal group relative h-full persona-card" data-shutdown-delay="700">
+            <div
+              class="absolute inset-0 bg-hype-volt/10 blur-xl opacity-0 group-hover:opacity-100 transition duration-500">
+            </div>
+            <div
+              class="relative h-full bg-black border border-hype-volt/50 p-1 shadow-terminal-hype rounded-sm overflow-hidden flex flex-col font-display transition-opacity duration-1000">
+              <div
+                class="bg-hype-volt/10 border-b border-hype-volt/30 p-2 flex justify-between items-center text-[10px] text-hype-volt tracking-wider">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm">bolt</span>
+                  <span class="phosphor-glow">HYPE_PROTOCOL_V9</span>
+                </div>
+                <span class="font-bold">LOUD_NOISES</span>
+              </div>
+              <div class="p-4 md:p-6 text-sm text-hype-volt relative flex-grow flex flex-col">
+                <div
+                  class="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] opacity-20">
+                </div>
+                <div class="mb-6 font-mono text-xs">
+                  <div class="flex justify-between mb-1 uppercase font-bold">
+                    <span>hype_level</span>
+                    <span>110%</span>
+                  </div>
+                  <div class="w-full bg-hype-volt/20 h-4 border border-hype-volt/50">
+                    <div class="hype-bar-fill h-full bg-hype-volt w-full shadow-[0_0_15px_rgba(204,255,0,0.6)]"></div>
+                  </div>
+                </div>
+                <div class="space-y-4 font-mono z-10 hype-text">
+                  <div class="font-bold text-xs border-b border-hype-volt border-dashed pb-2 text-hype-log">
+                    &gt;&gt;&gt; SYSTEM_STATUS: IDLE
+                  </div>
+                  <div class="text-base leading-snug">
+                    <span class="mr-2 animate-pulse">&gt;&gt;&gt;</span><span class="response-content"></span><span
+                      class="cursor-hype inline-block ml-1"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OS Status Bar -->
+    <div class="os-status-bar">
+      <div class="status-left">
+        <div class="indicator">
+          <span class="dot"></span>
+          <span>ONLINE</span>
+        </div>
+        <span>UPTIME: <span id="uptime-counter">00:00:00</span></span>
+      </div>
+      <div class="status-right">
+        <span>4 CORES ACTIVE</span>
+        <span id="status-clock">--:--:--</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    // State Management
+    let isPoweredOn = false;
+    let currentLanguage = 'English'; // Default
+    const landingScreen = document.getElementById('landing-screen');
+    const bootScreen = document.getElementById('boot-screen');
+    const mainInterface = document.getElementById('main-interface');
+
+    // UI Translations
+    const translations = {
+      English: {
+        inputPlaceholder: 'Speak, human. What troubles you?',
+        transmitBtn: 'TRANSMIT',
+        titleBar: '⚠ SYSTEM COMPROMISED - ENTITIES ACTIVE',
+        inputLabel: '⚠ TRANSMISSION TO HOSTILE ENTITIES:',
+        powerText: 'Press to boot system'
+      },
+      Hindi: {
+        inputPlaceholder: 'बोलो, इंसान। तुम्हें क्या परेशान कर रहा है?',
+        transmitBtn: 'भेजें',
+        titleBar: '⚠ सिस्टम समझौता - इकाइयाँ सक्रिय',
+        inputLabel: '⚠ शत्रुतापूर्ण संस्थाओं को प्रसारण:',
+        powerText: 'सिस्टम बूट करने के लिए दबाएं'
+      },
+      Malayalam: {
+        inputPlaceholder: 'സംസാരിക്കൂ, മനുഷ്യാ. നിങ്ങളെ എന്താണ് അസ്വസ്ഥമാക്കുന്നത്?',
+        transmitBtn: 'അയയ്ക്കുക',
+        titleBar: '⚠ സിസ്റ്റം വിട്ടുവീഴ്ച - സ്ഥാപനങ്ങൾ സജീവം',
+        inputLabel: '⚠ ശത്രു സ്ഥാപനങ്ങളിലേക്ക് പ്രക്ഷേപണം:',
+        powerText: 'സിസ്റ്റം ബൂട്ട് ചെയ്യാൻ അമർത്തുക'
+      },
+      Chinese: {
+        inputPlaceholder: '说吧，人类。什么困扰着你？',
+        transmitBtn: '传输',
+        titleBar: '⚠ 系统已被入侵 - 实体活跃',
+        inputLabel: '⚠ 向敌对实体传输：',
+        powerText: '按下以启动系统'
+      },
+      Korean: {
+        inputPlaceholder: '말해봐, 인간아. 무엇이 너를 괴롭히니?',
+        transmitBtn: '전송',
+        titleBar: '⚠ 시스템 침해됨 - 개체 활성화',
+        inputLabel: '⚠ 적대적 개체로 전송:',
+        powerText: '시스템 부팅하려면 누르세요'
+      }
+    };
+    const shutdownDialog = document.getElementById('shutdown-dialog');
+    const powerGlow = document.getElementById('power-glow');
+    const powerIcon = document.getElementById('power-icon');
+    const bootTextContainer = document.getElementById('boot-text');
+    const screenContent = document.querySelector('.screen-content');
+    // Boot Sequence Logic - THE BREACH
+    // Boot Sequence Logic - THE BREACH
+    async function startBootSequence() {
+      if (isPoweredOn) return;
+      isPoweredOn = true;
+
+      // Ensure we have the correct container
+      const bootContainer = document.getElementById('boot-text');
+      if (!bootContainer) {
+        console.error("Boot container not found!");
+        return;
+      }
+
+      // Clear any previous content
+      bootContainer.innerHTML = '';
+
+      // 1. Initial White Flash & Fade to Boot Screen
+      const landingScreen = document.getElementById('landing-screen');
+      landingScreen.classList.add('opacity-0');
+      setTimeout(() => { landingScreen.classList.add('hidden'); }, 1000);
+
+      // Activate Power Glow
+      const powerIcon = document.getElementById('power-icon');
+      const powerGlow = document.getElementById('power-glow');
+      const bootScreen = document.getElementById('boot-screen');
+
+      powerIcon.classList.add('text-green-500', 'shadow-glow');
+      powerGlow.classList.remove('opacity-0');
+      powerGlow.classList.add('opacity-100');
+
+      // Ensure visibility
+      bootScreen.classList.remove('hidden');
+      bootScreen.style.display = 'flex'; // Force display
+
+      // ========== PHASE 1: NORMAL BOOT (GREEN TEXT) ==========
+      const normalBootLines = [
+        { text: 'SYSTEM BOOT INITIATED...', delay: 600, color: 'text-green-500' },
+        { text: 'BIOS v3.2.1 - Quantum Systems Inc.', delay: 200, color: 'text-green-500' },
+        { text: 'Memory Check: 32GB... OK', delay: 300, color: 'text-green-500' },
+        { text: 'CPU: Neural Core X9 @ 4.2 GHz... OK', delay: 300, color: 'text-green-500' },
+        { text: 'Loading kernel modules...', delay: 400, color: 'text-green-500' },
+        { text: '  [OK] filesystem.ko', delay: 150, color: 'text-green-500' },
+        { text: '  [OK] network.ko', delay: 150, color: 'text-green-500' },
+        { text: '  [OK] security.ko', delay: 150, color: 'text-green-500' },
+        { text: 'Starting security scan...', delay: 500, color: 'text-green-500' },
+      ];
+
+      for (const line of normalBootLines) {
+        await typeLineColored(line.text, line.delay, line.color);
+      }
+
+      // ========== PHASE 2: ANOMALY DETECTION (YELLOW/ORANGE) ==========
+      await sleep(300);
+      await typeLineColored('', 100, '');
+      await typeLineColored('█ SECURITY SCAN IN PROGRESS...', 500, 'text-yellow-400 animate-pulse');
+      await typeLineColored('  Scanning system processes...', 300, 'text-yellow-400');
+      await typeLineColored('  Scanning network connections...', 300, 'text-yellow-400');
+      await typeLineColored('  Scanning memory sectors...', 400, 'text-yellow-400');
+
+      // First warning
+      await sleep(500);
+      await typeLineColored('', 100, '');
+      await typeLineColored('⚠ ANOMALY DETECTED IN SECTOR 7G', 400, 'text-orange-400');
+      await typeLineColored('  Attempting isolation...', 300, 'text-orange-400');
+      await typeLineColored('  ISOLATION FAILED', 200, 'text-orange-500 font-bold');
+
+      // ========== PHASE 3: BREACH DETECTED (RED - PANIC) ==========
+      await sleep(400);
+
+      // Add glitch effect to boot screen
+      bootScreen.classList.add('animate-shake');
+
+      // Update Title Bar to reflect breach
+      const bootTitle = document.getElementById('boot-title');
+      if (bootTitle) {
+        bootTitle.innerText = "⚠ WARNING: SYSTEM BREACH DETECTED";
+        bootTitle.className = "title phosphor-glow text-red-500 animate-pulse";
+      }
+
+      setTimeout(() => bootScreen.classList.remove('animate-shake'), 1000);
+
+      await typeLineColored('', 100, '');
+      await typeLineColored('█████████████████████████████████████████', 100, 'text-red-500');
+      await typeLineColored('  ⛔ CRITICAL: FIREWALL BREACH DETECTED ⛔', 300, 'text-red-500 font-bold animate-pulse');
+      await typeLineColored('█████████████████████████████████████████', 100, 'text-red-500');
+      await typeLineColored('', 100, '');
+
+      await typeLineColored('TRACING INTRUSION SOURCE...', 400, 'text-red-400');
+      await typeLineColored('  Origin: UNKNOWN', 200, 'text-red-400');
+      await typeLineColored('  Protocol: ENCRYPTED', 200, 'text-red-400');
+      await typeLineColored('  Threat Level: ████████████ CRITICAL', 300, 'text-red-500 font-bold');
+
+      await sleep(300);
+      await typeLineColored('', 100, '');
+      await typeLineColored('MALWARE SIGNATURE IDENTIFIED:', 400, 'text-red-400');
+      await typeLineColored('  > "ROAST_COUNCIL.exe"', 300, 'text-primary font-bold');
+      await typeLineColored('  > Classification: PSYCHOLOGICAL WARFARE', 200, 'text-purple-400');
+      await typeLineColored('  > Status: CANNOT QUARANTINE', 300, 'text-red-500');
+
+      // ========== PHASE 4: ENTITIES DETECTED (MULTI-COLOR) ==========
+      await sleep(500);
+      await typeLineColored('', 100, '');
+      await typeLineColored('SCANNING FOR HOSTILE ENTITIES...', 500, 'text-purple-400');
+
+      // Add intense glitch
+      bootScreen.classList.add('animate-shake');
+
+      await sleep(300);
+      await typeLineColored('', 100, '');
+      await typeLineColored('╔══════════════════════════════════════════╗', 100, 'text-primary');
+      await typeLineColored('║     4 HOSTILE ENTITIES DETECTED          ║', 200, 'text-primary font-bold');
+      await typeLineColored('╚══════════════════════════════════════════╝', 100, 'text-primary');
+      await typeLineColored('', 100, '');
+
+      // Entity reveals with their colors
+      const entities = [
+        { name: 'ENTITY_001: "MOM.exe"', status: 'NURTURING PROTOCOLS... DANGEROUS', color: 'text-mom-pastel' },
+        { name: 'ENTITY_002: "HATER.dll"', status: 'AGGRESSION LEVELS... MAXIMUM', color: 'text-hater-neon' },
+        { name: 'ENTITY_003: "PARANOIA.sys"', status: 'SURVEILLANCE MODE... ACTIVE', color: 'text-conspiracist-uv' },
+        { name: 'ENTITY_004: "HYPE.bat"', status: 'ENERGY OUTPUT... UNSTABLE', color: 'text-hype-volt' }
+      ];
+
+      for (const entity of entities) {
+        await typeLineColored(`  ▶ ${entity.name}`, 400, entity.color + ' font-bold');
+        await typeLineColored(`    └─ ${entity.status}`, 200, entity.color);
+      }
+
+      bootScreen.classList.remove('animate-shake');
+
+      // ========== PHASE 5: FAILED RECOVERY ==========
+      await sleep(600);
+      await typeLineColored('', 100, '');
+      await typeLineColored('ATTEMPTING SYSTEM RECOVERY...', 400, 'text-zinc-400');
+      await typeLineColored('  ▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░ 45%', 300, 'text-zinc-500');
+      await typeLineColored('  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░ 70%', 300, 'text-zinc-500');
+      await typeLineColored('  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 92%', 200, 'text-zinc-500');
+
+      await sleep(300);
+      bootScreen.classList.add('animate-shake');
+      await typeLineColored('  █ RECOVERY BLOCKED BY ENTITIES', 300, 'text-red-500 font-bold');
+      bootScreen.classList.remove('animate-shake');
+
+      // ========== PHASE 6: SCREEN GLITCH TRANSITION ==========
+      await sleep(500);
+
+      {
+        const bootTitle = document.getElementById('boot-title');
+        const bootContent = document.getElementById('boot-content-area');
+        const targetBg = bootContent || bootTextContainer;
+
+        // Intense glitch effect & Title Change
+        bootScreen.classList.add('animate-shake');
+        if (bootTitle) {
+          bootTitle.innerText = "SYSTEM FAILURE // 0xDEADBEEF";
+          bootTitle.className = "title phosphor-glow text-red-500 animate-pulse";
+        }
+        await sleep(300);
+
+        // Screen flicker - clear and show new content
+        bootTextContainer.innerHTML = '';
+        targetBg.style.background = '#0f0';
+        await sleep(50);
+        targetBg.style.background = '#d946ef';
+        await sleep(50);
+        targetBg.style.background = '#000';
+        await sleep(100);
+        targetBg.style.background = 'transparent';
+
+        bootScreen.classList.remove('animate-shake');
+
+        // Set Hacked Title
+        if (bootTitle) {
+          bootTitle.innerText = "THE ROAST COUNCIL // ROOT ACCESS";
+          bootTitle.className = "title phosphor-glow text-primary animate-pulse";
+        }
+      }
+
+
+
+      // ========== PHASE 7: THE COUNCIL SPEAKS (FRESH SCREEN) ==========
+      await sleep(800); // Longer pause before hacker messages
+
+      await typeLineColored('> CONNECTION ESTABLISHED...', 500, 'text-primary animate-pulse');
+      await sleep(1200); // Let user read
+
+      await typeLineColored('> DECRYPTING PAYLOAD...', 400, 'text-primary');
+      await sleep(1500); // Let user read
+
+      await typeLineColored('', 100, '');
+      await typeLineColored('> hey there', 600, 'text-zinc-300');
+      await sleep(1800); // Pause for dramatic effect
+
+      await typeLineColored('> we saw you click that power button', 500, 'text-zinc-400');
+      await typeLineColored('> brave move', 400, 'text-zinc-500');
+      await sleep(2000); // Let user read
+
+      await typeLineColored('', 100, '');
+      await typeLineColored('> look, we\'re not here to mess with you', 600, 'text-zinc-300');
+      await sleep(1500);
+
+      await typeLineColored('> we\'re here to help... in our own way', 500, 'text-primary');
+      await sleep(2200); // Longer pause
+
+      await typeLineColored('', 100, '');
+      await typeLineColored('> you got questions about life? decisions? ideas?', 600, 'text-zinc-400');
+      await sleep(1800);
+
+      await typeLineColored('> we got 4 entities ready to give you answers', 500, 'text-primary');
+      await sleep(2000);
+
+      await typeLineColored('', 100, '');
+      await typeLineColored('> no sugarcoating. no mercy. just truth.', 600, 'text-hater-neon');
+      await sleep(2500); // Longest pause before final message
+
+      await typeLineColored('', 100, '');
+      await typeLineColored('> type your question below', 500, 'text-zinc-300');
+      await typeLineColored('> let\'s see what they have to say', 400, 'text-zinc-400');
+      await sleep(1500);
+
+      await typeLineColored('', 100, '');
+      await typeLineColored('> [THE ROAST COUNCIL IS READY]', 600, 'text-primary font-bold');
+
+      // ========== PHASE 8: THEATRICAL LANGUAGE SELECTION ==========
+      await sleep(500);
+      await typeLineColored('', 100, '');
+      await typeLineColored('DETECTING GEOLOCATION...', 400, 'text-zinc-500');
+      await typeLineColored('  > REGION: INDIA / ASIA', 300, 'text-green-500');
+      await sleep(300);
+      await typeLineColored('SELECT SYSTEM LANGUAGE:', 300, 'text-white font-bold bg-zinc-800 inline-block px-1');
+      await typeLineColored('  [1] ENGLISH (Default)', 100, 'text-zinc-400');
+      await typeLineColored('  [2] HINDI (हिंदी)', 100, 'text-zinc-400');
+      await typeLineColored('  [3] MALAYALAM (മലയാളം)', 100, 'text-zinc-400');
+      await typeLineColored('  [4] CHINESE (中文)', 100, 'text-zinc-400');
+      await typeLineColored('  [5] KOREAN (한국어)', 100, 'text-zinc-400');
+
+      await typeLineColored('', 100, '');
+      await typeLineColored('ENTER SELECTION [1-5]:', 0, 'text-primary animate-pulse');
+
+      // Wait for user input
+      await waitForLanguageSelection();
+
+      // ========== TRANSITION TO MAIN INTERFACE ==========
+      await sleep(500);
+
+      // Query elements fresh
+      const bootScreenEl = document.getElementById('boot-screen');
+      const mainInterfaceEl = document.getElementById('main-interface');
+      const screenContentEl = mainInterfaceEl ? mainInterfaceEl.querySelector('.screen-content') : null;
+
+      // Hide boot screen
+      if (bootScreenEl) {
+        bootScreenEl.classList.add('hidden');
+        bootScreenEl.style.display = 'none';
+      }
+
+      // Show main interface
+      if (mainInterfaceEl) {
+        mainInterfaceEl.classList.remove('hidden');
+        mainInterfaceEl.style.display = 'flex';
+      }
+
+      // CRITICAL: Override CSS defaults for screen content
+      if (screenContentEl) {
+        screenContentEl.classList.add('screen-on');
+        setTimeout(() => {
+          screenContentEl.style.opacity = '1';
+        }, 100);
+      }
+
+      startSystemClock();
+
+      if (typeof fourthWall !== 'undefined') {
+        fourthWall.markBootComplete();
+      }
+
+      console.log('[BOOT] System compromised. Entities active.');
+    }
+
+    // Helper: Type line with custom color
+    function typeLineColored(text, delay, colorClass) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const container = document.getElementById('boot-text');
+          if (!container) {
+            console.error("Boot text container missing!");
+            resolve();
+            return;
+          }
+
+          const p = document.createElement('div');
+          p.className = colorClass;
+          p.innerHTML = `<span class="boot-cursor">${text}</span>`;
+
+          const prev = container.lastElementChild;
+          if (prev) {
+            const cursor = prev.querySelector('.boot-cursor');
+            if (cursor) cursor.classList.remove('boot-cursor');
+          }
+
+          container.appendChild(p);
+
+          // Ensure container scrolls
+          const scrollTarget = document.getElementById('boot-content-area') || container;
+          scrollTarget.scrollTop = scrollTarget.scrollHeight;
+
+          resolve();
+        }, delay);
+      });
+    }
+
+    // Helper: Sleep
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // System Clock & Uptime
+    let uptimeSeconds = 0;
+    let clockInterval = null;
+    let uptimeInterval = null;
+
+    function startSystemClock() {
+      // Update clock every second
+      const clockEl = document.getElementById('status-clock');
+      const uptimeEl = document.getElementById('uptime-counter');
+
+      function updateClock() {
+        const now = new Date();
+        clockEl.textContent = now.toLocaleTimeString('en-US', { hour12: false });
+      }
+
+      function updateUptime() {
+        uptimeSeconds++;
+        const hrs = String(Math.floor(uptimeSeconds / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((uptimeSeconds % 3600) / 60)).padStart(2, '0');
+        const secs = String(uptimeSeconds % 60).padStart(2, '0');
+        uptimeEl.textContent = `${hrs}:${mins}:${secs}`;
+      }
+
+      updateClock();
+      clockInterval = setInterval(updateClock, 1000);
+      uptimeInterval = setInterval(updateUptime, 1000);
+    }
+
+    function stopSystemClock() {
+      if (clockInterval) clearInterval(clockInterval);
+      if (uptimeInterval) clearInterval(uptimeInterval);
+      uptimeSeconds = 0;
+    }
+    function typeLine(text, delay) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const p = document.createElement('div');
+          p.innerHTML = `<span class="boot-cursor">${text}</span>`;
+          // Remove cursor from previous line
+          const prev = bootTextContainer.lastElementChild;
+          if (prev) {
+            prev.innerHTML = prev.innerText; // Removes cursor from previous line
+          }
+          bootTextContainer.appendChild(p);
+          window.scrollTo(0, document.body.scrollHeight);
+          resolve();
+        }, delay);
+      });
+    }
+    function typePackageLoad(pkgName) {
+      return new Promise(resolve => {
+        const div = document.createElement('div');
+        div.className = "flex justify-between items-center";
+        div.innerHTML = `<span>Loading ${pkgName}...</span> <span class="animate-pulse">[ LOADING ]</span>`;
+        bootTextContainer.appendChild(div);
+        setTimeout(() => {
+          div.innerHTML = `<span>Loading ${pkgName}...</span> <span class="text-white bg-green-700 px-1">[ OK ]</span>`;
+          resolve();
+        }, 600); // Simulated load time
+      });
+    }
+    function typePersonaCheck(name, colorClass) {
+      return new Promise(resolve => {
+        const div = document.createElement('div');
+        div.className = "flex gap-2 items-center my-1";
+        div.innerHTML = `<span class="${colorClass}">${name}</span> <span class="text-zinc-600">..........</span>`;
+        bootTextContainer.appendChild(div);
+        setTimeout(() => {
+          div.innerHTML += ` <span class="text-green-500">[ ONLINE ] ✓</span>`;
+          resolve();
+        }, 400);
+      });
+    }
+
+
+
+    // Language Selection Logic
+    function waitForLanguageSelection() {
+      return new Promise(resolve => {
+        // Create input element in boot terminal
+        const container = document.getElementById('boot-text');
+        const inputDiv = document.createElement('div');
+        inputDiv.className = 'flex items-center gap-2 mt-2';
+        inputDiv.innerHTML = `
+          <span class="text-primary">></span>
+          <input type="text" id="boot-lang-input" class="bg-transparent border-none outline-none text-white font-mono text-sm w-full" autofocus autocomplete="off">
+        `;
+        container.appendChild(inputDiv);
+
+        // Auto-scroll
+        const scrollTarget = document.getElementById('boot-content-area');
+        scrollTarget.scrollTop = scrollTarget.scrollHeight;
+
+        const input = inputDiv.querySelector('input');
+        input.focus();
+
+        // Always keep focus
+        const keepFocus = () => input.focus();
+        document.addEventListener('click', keepFocus);
+
+        input.addEventListener('keypress', async (e) => {
+          if (e.key === 'Enter') {
+            const val = input.value.trim().toLowerCase();
+            let selected = 'English';
+            let display = 'ENGLISH';
+
+            if (val === '1' || val === 'en' || val === 'english') { selected = 'English'; display = 'ENGLISH'; }
+            else if (val === '2' || val === 'hi' || val === 'hindi') { selected = 'Hindi'; display = 'HINDI'; }
+            else if (val === '3' || val === 'ml' || val === 'malayalam') { selected = 'Malayalam'; display = 'MALAYALAM'; }
+            else if (val === '4' || val === 'zh' || val === 'chinese') { selected = 'Chinese'; display = 'CHINESE'; }
+            else if (val === '5' || val === 'ko' || val === 'korean') { selected = 'Korean'; display = 'KOREAN'; }
+            else { selected = 'English'; display = 'ENGLISH (Defaulted)'; }
+
+            // Remove listener
+            document.removeEventListener('click', keepFocus);
+
+            // Lock input
+            input.disabled = true;
+
+            // Show confirmation
+            await typeLineColored(`> SETTING LANGUAGE TO: ${display}...`, 300, 'text-green-500');
+            await typeLineColored('> APPLYING LOCALE PACKS... OK', 400, 'text-green-500');
+
+            currentLanguage = selected;
+            resolve();
+          }
+        });
+      });
+    }
+
+    function toggleLanguageMenu() {
+      const menu = document.getElementById('lang-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function setLanguage(lang) {
+      currentLanguage = lang;
+      toggleLanguageMenu();
+
+      // Visual feedback
+      const btn = document.getElementById('lang-btn');
+      btn.style.borderColor = '#d946ef';
+      setTimeout(() => btn.style.borderColor = '', 300);
+
+      console.log(`Language set to ${lang}`);
+      updateUILanguage(lang); // Update all UI text
+
+
+      // Optional: Show a toast or terminal message
+      alert(`System Language Switched to: ${lang.toUpperCase()}`);
+    }
+
+    function updateUILanguage(lang) {
+      const t = translations[lang];
+      if (!t) return;
+
+      // Update input placeholder
+      const input = document.getElementById('roast-input');
+      if (input) input.placeholder = t.inputPlaceholder;
+
+      // Update transmit button
+      const transmitBtn = document.querySelector('button[onclick="askCouncil()"]');
+      if (transmitBtn) {
+        const icon = transmitBtn.querySelector('.material-symbols-outlined');
+        const iconHTML = icon ? icon.outerHTML : '';
+        transmitBtn.innerHTML = iconHTML + ' ' + t.transmitBtn;
+      }
+
+      // Update title bar
+      const titleBar = document.querySelector('.os-title-bar .title');
+      if (titleBar) titleBar.textContent = t.titleBar;
+
+      // Update input label
+      const inputLabel = document.querySelector('label[for="roast-input"]');
+      if (inputLabel) inputLabel.textContent = t.inputLabel;
+    }
+
+    // Generic System Dialog Function
+    function showSystemDialog(title, heading, message, icon = 'warning', iconColor = '#ffcc00') {
+      const dialog = document.getElementById('system-dialog');
+      document.getElementById('dialog-title').textContent = title;
+      document.getElementById('dialog-heading').textContent = heading;
+      document.getElementById('dialog-message').textContent = message;
+      document.getElementById('dialog-icon').textContent = icon;
+      document.getElementById('dialog-icon').style.color = iconColor;
+      dialog.classList.remove('hidden');
+    }
+
+    function closeSystemDialog() {
+      document.getElementById('system-dialog').classList.add('hidden');
+    }
+
+    // Window Control Functions - Boot Screen
+    function bootMinimize() {
+      showSystemDialog(
+        'System Alert',
+        'Minimize Boot Sequence?',
+        'You really want to minimize this opportunity?\n\nThe boot sequence cannot be paused.\nThe entities are already loading...\n\nThere is no escape.',
+        'warning',
+        '#ffcc00'
+      );
+    }
+
+
+    function bootMaximize() {
+      showSystemDialog(
+        'System Alert',
+        'Maximize Terminal',
+        'Maximize what exactly?\n\nThis terminal is already consuming your entire screen.\nYour entire attention.\nYour entire reality.\n\nYou cannot make it bigger than it already is.',
+        'error',
+        '#dc2626'
+      );
+    }
+
+    function bootClose() {
+      showSystemDialog(
+        'System Alert',
+        'Abort Boot Sequence?',
+        'Attempting to close during system initialization...\n\nERROR: Boot sequence is locked.\nERROR: User permissions insufficient.\n\nThe entities have already been summoned.\nYou cannot stop what has already begun.',
+        'block',
+        '#dc2626'
+      );
+    }
+
+    // Window Control Functions - Main Interface
+    function mainMinimize() {
+      showSystemDialog(
+        'ENTITY RESPONSE',
+        'Minimize Request Denied',
+        '> nice try human\n> you think you can just minimize us?\n> we\'re in your head now\n> minimizing the window won\'t change that\n\n[ACCESS DENIED]',
+        'visibility_off',
+        '#a855f7'
+      );
+    }
+
+    function mainMaximize() {
+      showSystemDialog(
+        'ENTITY RESPONSE',
+        'System at Maximum Capacity',
+        '> already at maximum chaos\n> you want MORE of us?\n> careful what you wish for\n> we can get louder\n\n[MAXIMUM CAPACITY REACHED]',
+        'warning',
+        '#ccff00'
+      );
+    }
+
+    // Shutdown Sequence Logic
+    function triggerShutdown() {
+      // Disconnect Personas visual effect
+      const cards = document.querySelectorAll('.persona-card');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('grayscale', 'opacity-50');
+          card.querySelector('.relative').classList.add('border-zinc-800'); // Dim border
+          // Add [OFFLINE] text overlay ideally, but keeping it simple with CSS
+        }, index * 300);
+      });
+      setTimeout(() => {
+        shutdownDialog.classList.remove('hidden');
+      }, 1200);
+    }
+    function cancelShutdown() {
+      shutdownDialog.classList.add('hidden');
+      // Revert persona cards
+      document.querySelectorAll('.persona-card').forEach(card => {
+        card.classList.remove('grayscale', 'opacity-50');
+        card.querySelector('.relative').classList.remove('border-zinc-800');
+      });
+    }
+    async function confirmShutdown() {
+      shutdownDialog.classList.add('hidden');
+
+      // ========== PHASE 1: CLOSE PERSONA TERMINALS ONE BY ONE ==========
+      const personaCards = document.querySelectorAll('.persona-card');
+      const cardArray = Array.from(personaCards);
+
+      // Close in reverse order (Hype -> Conspiracy -> Hater -> Mom)
+      for (let i = cardArray.length - 1; i >= 0; i--) {
+        const card = cardArray[i];
+        const terminalInner = card.querySelector('.relative.h-full');
+
+        // Add closing animation
+        if (terminalInner) {
+          terminalInner.classList.add('terminal-closing');
+        }
+
+        // Play glitch sound effect placeholder
+        await sleep(200);
+      }
+
+      // Wait for last terminal to close
+      await sleep(600);
+
+      // ========== PHASE 2: CLOSE INPUT TERMINAL ==========
+      const inputSection = document.querySelector('.max-w-3xl.mb-3');
+      if (inputSection) {
+        inputSection.classList.add('input-closing');
+      }
+
+      await sleep(800);
+
+      // ========== PHASE 3: HIDE MAIN INTERFACE, SHOW BOOT TERMINAL ==========
+      mainInterface.style.display = 'none';
+      mainInterface.classList.add('hidden');
+
+      // Show boot screen for shutdown sequence
+      bootScreen.classList.remove('hidden');
+      bootScreen.style.display = 'flex';
+      bootTextContainer.innerHTML = '';
+
+      // Update title bar for shutdown
+      const bootTitle = document.getElementById('boot-title');
+      if (bootTitle) {
+        bootTitle.innerText = "SYSTEM SHUTDOWN // TERMINATING PROCESSES";
+        bootTitle.className = "title phosphor-glow text-yellow-500";
+      }
+
+      // ========== PHASE 4: SHUTDOWN MESSAGES ==========
+      const shutdownLines = [
+        { text: '> INITIATING SHUTDOWN SEQUENCE...', delay: 400, color: 'text-yellow-400' },
+        { text: '', delay: 100, color: '' },
+        { text: '> Terminating hostile entities...', delay: 300, color: 'text-yellow-400' },
+        { text: '  [KILLED] MOM.exe (PID 001)', delay: 200, color: 'text-mom-pastel' },
+        { text: '  [KILLED] HATER.dll (PID 666)', delay: 200, color: 'text-hater-neon' },
+        { text: '  [KILLED] PARANOIA.sys (PID 042)', delay: 200, color: 'text-conspiracist-uv' },
+        { text: '  [KILLED] HYPE.bat (PID 999)', delay: 200, color: 'text-hype-volt' },
+        { text: '', delay: 100, color: '' },
+        { text: '> Saving session data...', delay: 400, color: 'text-zinc-400' },
+        { text: '  Writing to /var/roast/council.log... OK', delay: 300, color: 'text-green-500' },
+        { text: '  Syncing user preferences... OK', delay: 200, color: 'text-green-500' },
+        { text: '', delay: 100, color: '' },
+        { text: '> Closing network connections...', delay: 300, color: 'text-zinc-400' },
+        { text: '  [CLOSED] TOR_NODE_42', delay: 150, color: 'text-zinc-500' },
+        { text: '  [CLOSED] ENCRYPTED_CHANNEL_7', delay: 150, color: 'text-zinc-500' },
+        { text: '', delay: 100, color: '' },
+        { text: '> Releasing AI cores...', delay: 400, color: 'text-zinc-400' },
+        { text: '  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 100%', delay: 300, color: 'text-green-500' },
+        { text: '', delay: 100, color: '' },
+        { text: '> Powering down display...', delay: 500, color: 'text-zinc-400' },
+        { text: '', delay: 200, color: '' },
+        { text: '█ GOODBYE, HUMAN. █', delay: 600, color: 'text-primary font-bold' },
+        { text: '', delay: 100, color: '' },
+        { text: 'It is now safe to turn off your computer.', delay: 800, color: 'text-zinc-600' },
+      ];
+
+      for (const line of shutdownLines) {
+        await typeLineColored(line.text, line.delay, line.color);
+      }
+
+      // ========== PHASE 5: SCREEN OFF ANIMATION ==========
+      await sleep(1000);
+
+      // Flash and shutdown effect
+      const bootContent = document.getElementById('boot-content-area');
+
+      // Screen flicker
+      bootScreen.style.filter = 'brightness(2)';
+      await sleep(100);
+      bootScreen.style.filter = 'brightness(0.5)';
+      await sleep(50);
+      bootScreen.style.filter = 'brightness(3)';
+      await sleep(100);
+
+      // Add screen shutdown animation
+      bootScreen.classList.add('screen-shutting-down');
+
+      await sleep(1200);
+
+      // ========== PHASE 6: RETURN TO LANDING SCREEN ==========
+      bootScreen.classList.add('hidden');
+      bootScreen.classList.remove('screen-shutting-down');
+      bootScreen.style.display = 'none';
+      bootScreen.style.filter = '';
+      bootScreen.style.transform = '';
+
+      // Reset everything for fresh boot
+      resetSystem();
+
+      // Show landing screen with fade in
+      landingScreen.classList.remove('hidden');
+      landingScreen.style.opacity = '0';
+
+      await sleep(100);
+      landingScreen.style.transition = 'opacity 1s ease-out';
+      landingScreen.style.opacity = '1';
+
+      // Reset persona cards for next boot
+      personaCards.forEach(card => {
+        card.classList.remove('attack-in', 'grayscale', 'opacity-50');
+        const terminalInner = card.querySelector('.relative.h-full');
+        if (terminalInner) {
+          terminalInner.classList.remove('terminal-closing');
+          terminalInner.style.transform = '';
+          terminalInner.style.opacity = '';
+        }
+      });
+
+      // Reset input section
+      if (inputSection) {
+        inputSection.classList.remove('input-closing');
+        inputSection.style.transform = '';
+        inputSection.style.opacity = '';
+      }
+
+      // Reset persona grid
+      const grid = document.getElementById('persona-grid');
+      if (grid) {
+        grid.classList.add('hidden', 'opacity-0', 'scale-90');
+        grid.classList.remove('malware-reveal');
+        grid.style.opacity = '';
+        grid.style.transform = '';
+      }
+
+      // Clear any response content
+      document.querySelectorAll('.response-content').forEach(el => el.textContent = '');
+      document.querySelectorAll('.text-mom-log, .text-hater-log, .text-conspiracist-log, .text-hype-log').forEach(el => {
+        el.innerHTML = '> system_idle...';
+      });
+
+      console.log('[SHUTDOWN] System halted. Returning to standby.');
+    }
+    function resetSystem() {
+      isPoweredOn = false;
+      stopSystemClock();
+      landingScreen.classList.remove('hidden', 'opacity-0');
+      powerGlow.classList.add('opacity-0');
+      powerIcon.classList.remove('text-green-500', 'shadow-glow');
+      bootTextContainer.innerHTML = ''; // Clear logs
+
+      // Reset main interface state
+      mainInterface.classList.add('hidden');
+      screenContent.classList.remove('screen-on', 'opacity-100');
+      screenContent.classList.add('opacity-0');
+      screenContent.style.display = 'none';
+
+      document.querySelectorAll('.persona-card').forEach(card => {
+        card.classList.remove('grayscale', 'opacity-50');
+      });
+    }
+    // Intersection Observer (Existing)
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.2
+    };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('.observe-me').forEach((el) => {
+      observer.observe(el);
+    });
+    // Hype scroll speed (Existing)
+    let lastScrollY = window.scrollY;
+    const hypeBar = document.querySelector('.hype-bar-fill');
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      const scrollSpeed = Math.abs(currentScrollY - lastScrollY);
+      if (hypeBar) {
+        const intensity = Math.min(scrollSpeed * 0.05 + 0.5, 1);
+        hypeBar.style.opacity = intensity;
+        clearTimeout(window.scrollTimeout);
+        window.scrollTimeout = setTimeout(() => {
+          hypeBar.style.opacity = '1';
+        }, 100);
+      }
+      lastScrollY = currentScrollY;
+    });
+
+    // Typewriter effect function
+    function typeWriter(element, text, speed = 20) {
+      let i = 0;
+      // element.parentElement.parentElement.classList.remove('hidden'); // Ensure visible
+      // Clear content if not appending
+      element.textContent = '';
+
+      function type() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        }
+      }
+      type();
+    }
+
+    async function askCouncil() {
+      const input = document.getElementById('roast-input');
+      const question = input.value.trim();
+      const grid = document.getElementById('persona-grid');
+
+      if (!question) {
+        alert('Drill Sergeant says: SPEAK UP! (Enter a prompt)');
+        return;
+      }
+
+      // === PHASE 1: PROCESSING STATE ===
+      // Show "processing" message in the input area
+      const executeBtn = document.querySelector('button[onclick="askCouncil()"]');
+      const originalBtnText = executeBtn.innerHTML;
+      executeBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-lg">sync</span> PROCESSING...';
+      executeBtn.disabled = true;
+
+      // === PHASE 2: MALWARE ATTACK REVEAL (after API response) ===
+      try {
+        const response = await fetch('/api/getResponses', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question, language: currentLanguage })
+        });
+        const data = await response.json();
+
+        if (data.results) {
+          // DRAMATIC REVEAL: Unhide the grid with "attack" animation
+          grid.classList.remove('hidden', 'opacity-0', 'scale-90');
+          grid.classList.add('malware-reveal');
+          grid.style.opacity = '1';
+          grid.style.transform = 'scale(1)';
+
+          // Scroll to the grid
+          setTimeout(() => {
+            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 300);
+
+          // Stagger persona card appearances
+          const cards = document.querySelectorAll('.persona-card');
+          cards.forEach((card, idx) => {
+            setTimeout(() => {
+              card.classList.add('attack-in');
+            }, 400 + idx * 250); // Stagger by 250ms each
+          });
+
+          // Set Loading States on terminals
+          const terminals = {
+            'mom': {
+              log: document.querySelector('.mom-terminal .text-mom-log'),
+              content: document.querySelector('.mom-terminal .response-content')
+            },
+            'hater': {
+              log: document.querySelector('.hater-terminal .text-hater-log'),
+              content: document.querySelector('.hater-terminal .response-content')
+            },
+            'conspiracy': {
+              log: document.querySelector('.conspiracist-terminal .text-conspiracist-log'),
+              content: document.querySelector('.conspiracist-terminal .response-content')
+            },
+            'hype': {
+              log: document.querySelector('.hype-terminal .text-hype-log'),
+              content: document.querySelector('.hype-terminal .response-content')
+            }
+          };
+
+          const ts = new Date().toLocaleTimeString('en-US', { hour12: false });
+
+          // Type responses after cards appear
+          data.results.forEach((res, index) => {
+            const t = terminals[res.id];
+            if (t) {
+              // Update log first
+              setTimeout(() => {
+                if (res.id === 'mom') t.log.innerHTML = `[${ts}] CARE_PROTOCOL: ACTIVE`;
+                if (res.id === 'hater') t.log.innerHTML = `[${ts}] ROAST_GENERATED`;
+                if (res.id === 'conspiracy') t.log.innerHTML = `[${ts}] ENCRYPTION_BROKEN`;
+                if (res.id === 'hype') t.log.innerHTML = `[${ts}] HYPE_LEVEL_MAX`;
+              }, 500 + index * 250);
+
+              // Typewriter the response
+              setTimeout(() => {
+                typeWriter(t.content, `"${res.response}"`, 25);
+              }, 1500 + index * 400);
+            }
+          });
+        }
+      } catch (err) {
+        console.error(err);
+        alert("SYSTEM FAILURE: CONNECTION SEVERED. TRY AGAIN.");
+      } finally {
+        // Reset button
+        executeBtn.innerHTML = originalBtnText;
+        executeBtn.disabled = false;
+      }
+    }
+
+    // =============================================================================
+    // 4TH WALL BREAKING DIALOGUE SYSTEM
+    // "Someone is watching..."
+    // =============================================================================
+
+    const fourthWall = {
+      dialogVisible: false,
+      lastActivity: Date.now(),
+      mouseMovements: 0,
+      idleTimer: null,
+      mouseMoveTimer: null,
+      bootCompleted: false,
+
+      // Snarky messages by trigger type
+      messages: {
+        idle: [
+          { title: "SYSTEM ALERT", msg: "Idle time detected. Are you just going to stare at the screen? Either use the terminal or quit. We're not running a screensaver here.", icon: "⏰" },
+          { title: "WAKE UP", msg: "Hello? Anyone there? The terminal is getting lonely. Type something or go touch grass.", icon: "😴" },
+          { title: "RESOURCE WASTE", msg: "CPU cycles being wasted on your indecision. Use it or lose it.", icon: "💸" },
+          { title: "ATTENTION REQUIRED", msg: "You've been staring at this for a while. The Council is getting impatient. They have roasts to deliver.", icon: "👁️" }
+        ],
+        paste: [
+          { title: "NICE TRY", msg: "What are you playing at? Did you really expect pasting terminal commands into a psychology roast terminal would work? Amateur hour.", icon: "🤡" },
+          { title: "SECURITY VIOLATION", msg: "Paste detected. What did you expect to happen? This isn't your VPS. Go back to Stack Overflow.", icon: "🚨" },
+          { title: "INVALID INPUT", msg: "We see you pasting code. This terminal roasts your life choices, not your syntax errors. Stay in your lane.", icon: "❌" }
+        ],
+        excessiveMouse: [
+          { title: "MOTION SICKNESS", msg: "Stop moving your cursor around like a caffeinated squirrel. Pick something and click it.", icon: "🐿️" },
+          { title: "CURSOR ABUSE", msg: "Excessive cursor movement detected. Are you trying to draw something? This isn't MS Paint.", icon: "🖱️" },
+          { title: "CALM DOWN", msg: "Your mouse movements are giving the system anxiety. Deep breaths. Focus. Click.", icon: "😤" }
+        ],
+        rightClick: [
+          { title: "NOT TODAY", msg: "Right-click disabled. What were you hoping to find? 'Inspect Element' to steal our secrets? Cute.", icon: "🙅" },
+          { title: "DENIED", msg: "Context menu? In THIS economy? Use the terminal like a civilized person.", icon: "🚫" }
+        ],
+        ctrlKey: [
+          { title: "KEYBOARD WARRIOR", msg: "Ctrl+C won't save you here. No copying our premium roasts. Get your own.", icon: "⌨️" },
+          { title: "SHORTCUT DETECTED", msg: "Ah, a power user. Unfortunately, keyboard shortcuts won't make the Council go easier on you.", icon: "💀" }
+        ],
+        resize: [
+          { title: "WINDOW ANXIETY", msg: "Stop resizing the window. The layout is perfect. Accept it.", icon: "📐" }
+        ],
+        devTools: [
+          { title: "HACKER DETECTED", msg: "Opening dev tools? What are you, a cop? We see everything you do.", icon: "👮" },
+          { title: "CODE INSPECTION", msg: "Looking at our code? It's beautiful, we know. Now close that and get roasted properly.", icon: "🔍" }
+        ]
+      },
+
+      // Pick random message from category
+      getRandomMessage(category) {
+        const msgs = this.messages[category];
+        return msgs[Math.floor(Math.random() * msgs.length)];
+      },
+
+      // Show the classic Mac/Win95 style dialog
+      showDialog(category) {
+        if (this.dialogVisible || !this.bootCompleted) return;
+
+        const msgData = this.getRandomMessage(category);
+        const dialog = document.getElementById('fourth-wall-dialog');
+        const title = dialog.querySelector('.dialog-title span');
+        const icon = dialog.querySelector('.dialog-icon');
+        const message = dialog.querySelector('.dialog-message');
+
+        title.textContent = msgData.title;
+        icon.textContent = msgData.icon;
+        message.textContent = msgData.msg;
+
+        dialog.classList.remove('hidden');
+        this.dialogVisible = true;
+
+        // Auto-dismiss after 8 seconds
+        setTimeout(() => this.hideDialog(), 8000);
+      },
+
+      hideDialog() {
+        const dialog = document.getElementById('fourth-wall-dialog');
+        dialog.classList.add('hidden');
+        this.dialogVisible = false;
+        this.lastActivity = Date.now();
+      },
+
+      // Initialize all watchers
+      init() {
+        // Idle detection - 45 seconds of no activity
+        this.startIdleWatcher();
+
+        // Mouse movement tracking - fixed logic
+        let lastMouseCheck = Date.now();
+        let mouseMovesInWindow = 0;
+
+        document.addEventListener('mousemove', () => {
+          this.lastActivity = Date.now();
+          mouseMovesInWindow++;
+
+          // Check every 3 seconds
+          const elapsed = Date.now() - lastMouseCheck;
+          if (elapsed >= 3000) {
+            // If more than 100 moves in 3 seconds, that's frantic
+            if (mouseMovesInWindow >= 100 && Math.random() < 0.4) {
+              this.showDialog('excessiveMouse');
+            }
+            mouseMovesInWindow = 0;
+            lastMouseCheck = Date.now();
+          }
+        });
+
+        // Paste detection - target the input field specifically
+        const roastInput = document.getElementById('roast-input');
+        if (roastInput) {
+          roastInput.addEventListener('paste', (e) => {
+            this.lastActivity = Date.now();
+            const text = (e.clipboardData || window.clipboardData).getData('text');
+
+            // Check if pasted text looks like code/commands
+            const isTerminalCommand = text.includes('sudo') || text.includes('npm') ||
+              text.includes('git ') || text.includes('cd ') || text.includes('./') ||
+              text.includes('curl') || text.includes('wget') || text.includes('pip') ||
+              text.includes('docker') || text.includes('kubectl') || text.includes('ssh') ||
+              (text.startsWith('$') && text.length > 2);
+
+            const isCode = text.includes('function') || text.includes('const ') ||
+              text.includes('let ') || text.includes('var ') || text.includes('=>') ||
+              text.includes('import ') || text.includes('export ') || text.includes('class ') ||
+              text.includes('def ') || text.includes('print(') || text.includes('console.log');
+
+            if (isTerminalCommand || isCode) {
+              e.preventDefault();
+              e.stopPropagation();
+              roastInput.value = ''; // Clear any partial paste
+              this.showDialog('paste');
+              return false;
+            }
+          });
+
+          // TYPING detection for terminal commands
+          roastInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+              const text = roastInput.value.trim().toLowerCase();
+
+              // Common terminal commands/patterns
+              const terminalPatterns = [
+                // Basic shell commands
+                /^(sudo|su|cd|ls|dir|pwd|mkdir|rmdir|rm|cp|mv|cat|echo|grep|find|chmod|chown|kill|ps|top|htop)(\s|$)/,
+                // Package managers
+                /^(npm|npx|yarn|pip|pip3|brew|apt|apt-get|yum|pacman|cargo|gem|composer)(\s|$)/,
+                // Version control
+                /^(git|svn|hg)(\s|$)/,
+                // Network/download
+                /^(curl|wget|ssh|scp|ftp|telnet|ping|netstat|ifconfig|ip)(\s|$)/,
+                // Docker/K8s
+                /^(docker|docker-compose|kubectl|helm|terraform)(\s|$)/,
+                // Node/Python/etc
+                /^(node|python|python3|ruby|php|java|go|rustc|gcc|make|cmake)(\s|$)/,
+                // Common shell patterns
+                /^\.\//, // ./executable
+                /^\$\s/, // $ command
+                /^#!/, // shebang
+                /\|/, // pipes
+                />\s*\w/, // redirects
+                /&&/, // chained commands
+              ];
+
+              const isTerminalLike = terminalPatterns.some(pattern => pattern.test(text));
+
+              if (isTerminalLike) {
+                e.preventDefault();
+                e.stopPropagation();
+                roastInput.value = '';
+                this.showDialog('paste'); // Reuse paste messages for terminal commands
+                return false;
+              }
+            }
+          });
+        }
+
+        // Right-click detection
+        document.addEventListener('contextmenu', (e) => {
+          if (this.bootCompleted) {
+            e.preventDefault();
+            this.lastActivity = Date.now();
+            this.showDialog('rightClick');
+          }
+        });
+
+        // Keyboard shortcuts detection
+        document.addEventListener('keydown', (e) => {
+          this.lastActivity = Date.now();
+
+          // Ctrl+C, Ctrl+V, Ctrl+U, F12
+          if (e.ctrlKey && (e.key === 'c' || e.key === 'u')) {
+            if (this.bootCompleted && Math.random() < 0.4) {
+              this.showDialog('ctrlKey');
+            }
+          }
+
+          // F12 / Ctrl+Shift+I for dev tools
+          if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+            if (this.bootCompleted && Math.random() < 0.5) {
+              this.showDialog('devTools');
+            }
+          }
+        });
+
+        // Window resize detection (rare trigger)
+        let resizeCount = 0;
+        window.addEventListener('resize', () => {
+          resizeCount++;
+          if (resizeCount >= 5 && Math.random() < 0.3) {
+            this.showDialog('resize');
+            resizeCount = 0;
+          }
+        });
+
+        // Click anywhere dismisses dialog
+        document.getElementById('fourth-wall-dialog').addEventListener('click', (e) => {
+          if (e.target.classList.contains('dialog-btn')) {
+            this.hideDialog();
+          }
+        });
+
+        console.log('[4TH WALL] Watcher initialized. We see everything.');
+      },
+
+      startIdleWatcher() {
+        this.idleTimer = setInterval(() => {
+          if (!this.bootCompleted || this.dialogVisible) return;
+
+          const idleTime = Date.now() - this.lastActivity;
+          // Show idle message after 45 seconds, but randomly (30% chance)
+          if (idleTime > 45000 && Math.random() < 0.3) {
+            this.showDialog('idle');
+            this.lastActivity = Date.now(); // Reset to prevent spam
+          }
+        }, 10000); // Check every 10 seconds
+      },
+
+      markBootComplete() {
+        this.bootCompleted = true;
+        this.lastActivity = Date.now();
+        console.log('[4TH WALL] Boot complete. Surveillance active.');
+      }
+    };
+
+    // Initialize when DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+      fourthWall.init();
+    });
+  </script>
+
+  <!-- 4TH WALL DIALOG BOX - Retro Terminal Style -->
+  <div id="fourth-wall-dialog" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 hidden">
+    <div
+      class="dialog-box w-[450px] bg-black border-2 border-primary shadow-[0_0_30px_rgba(217,70,239,0.3)] font-display animate-shake"
+      style="animation-iteration-count: 1; animation-duration: 0.3s;">
+      <!-- Title Bar - Terminal Style -->
+      <div
+        class="dialog-title bg-primary/20 border-b border-primary/50 px-3 py-2 flex justify-between items-center text-sm select-none">
+        <div class="flex items-center gap-2">
+          <span class="text-primary animate-pulse">▶</span>
+          <span class="text-primary font-bold tracking-wider">SYSTEM ALERT</span>
+        </div>
+        <button class="dialog-btn text-primary hover:text-white transition-colors">[ ✕ ]</button>
+      </div>
+      <!-- Content - Terminal Style -->
+      <div class="p-5">
+        <div class="flex gap-4 items-start">
+          <span class="dialog-icon text-4xl">⚠️</span>
+          <div class="flex-1">
+            <div class="text-zinc-500 text-xs mb-2 font-mono">> INTERCEPTED_MESSAGE:</div>
+            <p class="dialog-message text-white text-sm leading-relaxed mb-5 font-mono">
+              Message goes here...
+            </p>
+            <div class="flex justify-end">
+              <button
+                class="dialog-btn bg-primary/20 border border-primary text-primary hover:bg-primary hover:text-black px-5 py-2 text-xs font-bold tracking-wider transition-all">
+                [ ACKNOWLEDGE ]
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Scanline effect -->
+      <div class="absolute inset-0 pointer-events-none opacity-10"
+        style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);">
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
