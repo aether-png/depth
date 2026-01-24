@@ -2306,7 +2306,7 @@
 
       // === PHASE 2: MALWARE ATTACK REVEAL (after API response) ===
       try {
-        const response = await fetch('/api/getResponses', {
+        const response = await fetch('https://depth-6oro.onrender.com/api/getResponses', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ question, language: currentLanguage })
