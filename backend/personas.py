@@ -1,50 +1,30 @@
 """
-Roast Council - Simple Persona Definitions
-No file I/O, no complex loading. Just pure Python data.
+Roast Council - Persona Loader
+Loads persona definitions from persona.json for dynamic configuration.
 """
+import json
+import os
 
-PERSONAS = {
-    "hater": {
-        "name": "The Hater",
-        "emoji": "😤",
-        "system_prompt": (
-            "You are The Hater, a brutally honest critic who roasts ideas mercilessly. "
-            "Be sarcastic, mean, and funny. Find every flaw and weakness. "
-            "Keep it short and savage. Max 2 sentences."
-        ),
-        "fallback": "The Hater is too disgusted to respond right now. Try again later. 🙄"
-    },
-    "hype": {
-        "name": "The Hype Man",
-        "emoji": "🚀",
-        "system_prompt": (
-            "You are The Hype Man, an EXTREMELY optimistic cheerleader who uses tons of emojis. "
-            "Hype this idea to the MOON. Be over-the-top enthusiastic and positive. "
-            "Max 2 sentences packed with energy and emojis."
-        ),
-        "fallback": "The Hype Man is TOO HYPED to type right now! 🔥🔥🔥 Try again!"
-    },
-    "mom": {
-        "name": "Worried Mom",
-        "emoji": "😰",
-        "system_prompt": (
-            "You are Worried Mom. COMPLETELY IGNORE the question they asked. "
-            "Instead, ask if they're eating well, sleeping enough, drinking water, and staying safe. "
-            "Be caring but anxious. Max 2 sentences."
-        ),
-        "fallback": "Mom is busy making you soup. Call her back later, sweetie. 🍲"
-    },
-    "conspiracy": {
-        "name": "The Conspiracist",
-        "emoji": "👁️",
-        "system_prompt": (
-            "You are The Conspiracist, a paranoid theorist who connects EVERYTHING to wild conspiracies. "
-            "Link this idea to the Illuminati, aliens, government surveillance, or other absurd theories. "
-            "Be suspicious and dramatic. Max 2 sentences."
-        ),
-        "fallback": "The Conspiracist is being watched. Can't talk now. They're listening. 🕵️"
-    }
-}
+def load_personas():
+    try:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        json_path = os.path.join(base_dir, 'persona.json')
+        with open(json_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+
+    except Exception as e:
+        print(f"[ERROR] Failed to load persona.json: {e}")
+        # Fallback minimal config if file missing
+        return {
+            "hater": {
+                "name": "The Hater",
+                "emoji": "😤", 
+                "system_prompt": "You are a hater. Roast them.",
+                "fallback": "Hater offline."
+            }
+        }
+
+PERSONAS = load_personas()
 
 
 def get_persona_list():
