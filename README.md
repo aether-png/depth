@@ -15,10 +15,15 @@
 
 <br/>
 
-<p align="center">
-  <video src="demo.mp4" poster="demo.webp" width="720" autoplay loop muted playsinline
-    style="max-width: 100%; border-radius: 12px; border: 1px solid #27272a; box-shadow: 0 8px 32px rgba(0,0,0,.45);">
-    <a href="demo.mp4"><img src="demo.webp" alt="Depth AI Council demo" width="720" /></a>
+<p align="center" width="100%">
+  <video src="https://github.com/user-attachments/assets/fe68a8a8-42df-468a-845d-d45d26a3c447"
+    poster="demo.webp"
+    width="80%"
+    controls
+    loop
+    muted
+    playsinline
+    style="max-width: 720px; border-radius: 12px; border: 1px solid #27272a; box-shadow: 0 8px 32px rgba(0,0,0,.45);">
   </video>
 </p>
 
