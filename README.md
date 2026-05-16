@@ -1,21 +1,47 @@
-<h1 align="center">Depth AI Council</h1>
+<div align="center">
 
-<p align="center">
-  <a href="https://depth-chi.vercel.app"><img src="https://img.shields.io/badge/▶_try_live-depth--chi.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white" alt="Live demo" /></a>
-  <img src="https://img.shields.io/badge/Groq-Llama_3.3_70B-f55036?style=for-the-badge" alt="Groq" />
-  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask" />
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black" alt="Render" />
+<!-- gradient header · neon CRT palette -->
+<img src="https://capsule-render.vercel.app/api?type=venom&color=0:111,50:d946ef,100:33ff00&height=140&section=header&text=DEPTH%20AI%20COUNCIL&fontSize=42&fontColor=ffffff&fontAlignY=40&animation=twinkling" width="100%" alt="" />
+
+<br/>
+
+<!-- typing header · readme-typing-svg -->
+<a href="https://depth-chi.vercel.app">
+  <img
+    src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3200&pause=900&color=33FF41&center=true&vCenter=true&multiline=true&repeat=true&width=560&height=72&    lines=Press+power.;Survive+the+boot.;Pick+a+language.;Four+answers."
+    alt="Press power. Survive the boot. Pick a language. Four answers."
+  />
+</a>
+
+<br/>
+
+<!-- creative shields · vibe labels, not résumé stats -->
+<p>
+  <a href="https://depth-chi.vercel.app"><img src="https://img.shields.io/badge/▶_LIVE_DEMO-depth--chi.vercel.app-d946ef?style=for-the-badge&labelColor=0a0a0a" alt="Live demo" /></a>
+  <img src="https://img.shields.io/badge/FRONTEND-haunted_OS-33ff41?style=for-the-badge&labelColor=0a0a0a" alt="Haunted OS" />
+  <img src="https://img.shields.io/badge/4TH_WALL-surveillance_on-ff003c?style=for-the-badge&labelColor=0a0a0a" alt="4th wall" />
+  <img src="https://img.shields.io/badge/STACK-vanilla_+_Flask-111111?style=for-the-badge&labelColor=27272a&logo=html5&logoColor=e34c26" alt="Stack" />
 </p>
 
-<p align="center">
-  <strong>Ask once → four AI personas roast you in parallel</strong><br/>
-  <sub>CRT terminal UI · hostile 4th-wall hooks · built around free-tier API limits</sub>
+<p>
+  <img src="https://img.shields.io/badge/CRT-scanlines_·_phosphor_·_static-0a0a0a?style=flat-square&labelColor=33ff41&color=0a0a0a" alt="CRT" />
+  <img src="https://img.shields.io/badge/BOOT-8_phases_·_typed-0a0a0a?style=flat-square&labelColor=d946ef&color=0a0a0a" alt="Boot" />
+  <img src="https://img.shields.io/badge/LANGS-5_locales-0a0a0a?style=flat-square&labelColor=ccff00&color=0a0a0a" alt="Languages" />
+  <img src="https://img.shields.io/badge/REVEAL-malware_pop--in-0a0a0a?style=flat-square&labelColor=ff003c&color=0a0a0a" alt="Reveal" />
 </p>
 
 <br/>
 
-<p align="center" width="100%">
+<!-- demo · video + dark/light poster fallback -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="demo.webp" />
+  <source media="(prefers-color-scheme: light)" srcset="demo.webp" />
+  <img src="demo.webp" alt="Roast Council — four persona terminals" width="720" style="max-width:100%; border-radius:12px; border:1px solid #33ff4133;" />
+</picture>
+
+<br/>
+
+<p width="100%">
   <video src="https://github.com/user-attachments/assets/fe68a8a8-42df-468a-845d-d45d26a3c447"
     poster="demo.webp"
     width="80%"
@@ -23,188 +49,179 @@
     loop
     muted
     playsinline
-    style="max-width: 720px; border-radius: 12px; border: 1px solid #27272a; box-shadow: 0 8px 32px rgba(0,0,0,.45);">
+    style="max-width:720px; border-radius:12px; border:1px solid #d946ef55; box-shadow:0 0 40px #d946ef22;">
   </video>
 </p>
 
-<p align="center">
-  <a href="https://depth-chi.vercel.app"><strong>Open the live app →</strong></a>
-  &nbsp;·&nbsp;
-  <a href="#local-run">Run locally</a>
-  &nbsp;·&nbsp;
-  <a href="docs/performance-notes.md">Performance notes</a>
-</p>
+<p><strong><a href="https://depth-chi.vercel.app">Open the terminal →</a></strong></p>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:33ff00,100:d946ef&height=50&section=footer&fontSize=14&fontColor=ffffff&animation=twinkling" width="100%" alt="" />
+
+</div>
 
 ---
 
-## At a glance
+## What this is
+
+A **browser-only fake computer** that roasts you. Not a chat widget — a full **CRT desktop**: power-on, breach boot, language select, four hostile “malware” windows, and a UI that talks back when you misbehave.
+
+| | |
+|:---:|:---|
+| **Frontend** | ~2.7k lines vanilla HTML/CSS/JS — boot script, CRT CSS, `fourthWall`, window chrome |
+| **Backend** | One question → four parallel Groq calls (Flask, ~3–5s) |
+| **Point** | The UI work is the project; the API is the plumbing |
+
+---
+
+## Boot it like a machine
 
 <table>
 <tr>
-<td width="33%" valign="top">
+<td align="center" width="20%"><img src="https://img.shields.io/badge/①-POWER-33ff41?style=for-the-badge&labelColor=0a0a0a" /></td>
+<td>Glow button → white flash → boot window opens</td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/②-BIOS-33ff41?style=for-the-badge&labelColor=0a0a0a" /></td>
+<td>Green typed lines · memory check · security scan</td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/③-BREACH-ff003c?style=for-the-badge&labelColor=0a0a0a" /></td>
+<td>Firewall dies · <code>ROAST_COUNCIL.exe</code> · screen shake</td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/④-ENTITIES-d946ef?style=for-the-badge&labelColor=0a0a0a" /></td>
+<td><code>MOM.exe</code> · <code>HATER.dll</code> · <code>PARANOIA.sys</code> · <code>HYPE.bat</code></td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/⑤-GLITCH-ccff00?style=for-the-badge&labelColor=0a0a0a" /></td>
+<td>Recovery fails · color flicker · <em>ROOT ACCESS</em> title</td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/⑥-VOICE-d946ef?style=for-the-badge&labelColor=0a0a0a" /></td>
+<td>Hacker monologue — <em>“we saw you click that power button”</em></td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/⑦-LANG-33ff41?style=for-the-badge&labelColor=0a0a0a" /></td>
+<td>Keys <strong>1–5</strong>: EN · HI · ML · ZH · KO — UI strings swap</td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/⑧-COUNCIL-33ff41?style=for-the-badge&labelColor=0a0a0a" /></td>
+<td>Main desktop · clock · language menu · ask your question</td>
+</tr>
+</table>
 
-**Product**
+**Traffic lights** (red / yellow / green) on boot + council windows — fake Mac chrome. They don’t minimize anything; they open **retro alerts** that insult you. **Close** on the council triggers a full shutdown animation.
 
-One-shot “Roast Council”: type a question, get four contradictory takes in a retro terminal — Mom, Hater, Conspiracist, Hype.
+**After you transmit:** four panels **malware-reveal** in · per-persona typewriters · unique cursors (Mom ♥, Hater █, …).
 
-</td>
-<td width="33%" valign="top">
+---
 
-**Engineering**
+## Poke the fourth wall
 
-`ThreadPoolExecutor` fires four Groq calls at once. Per-call timeouts, `max_tokens` caps, and fallbacks so one failure does not 500 the batch.
+*Only after boot finishes — the OS starts watching.*
 
-</td>
-<td width="33%" valign="top">
+| Try | Dialog vibe |
+|-----|-------------|
+| Idle ~45s | `SYSTEM ALERT` |
+| Paste `npm` / `git` / code | `SECURITY VIOLATION` — blocked |
+| Type `ls` + Enter | Same — no terminal cosplay |
+| Mouse spam | `MOTION SICKNESS` |
+| Right-click | `NOT TODAY` |
+| Ctrl+C · F12 | `KEYBOARD WARRIOR` · `HACKER DETECTED` |
+| Resize window | `WINDOW ANXIETY` |
 
-**UX**
+Random copy each time · Win95-style box · auto-dismiss ~8s · zero API calls.
 
-No streaming → loading is **designed** (boot, scanlines, malware reveal, typewriter). Idle/paste/DevTools hooks keep a stateless page feeling alive.
+---
 
-</td>
+## The council
+
+<table>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/MOM.exe-pastel_panic-fca5a5?style=for-the-badge&labelColor=1a0a0a" /></td>
+<td>Everything is a health crisis</td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/HATER.dll-two_sentences_max-ff003c?style=for-the-badge&labelColor=1a0a0a" /></td>
+<td>Maximum damage, minimum words</td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/PARANOIA.sys-they're_watching-a855f7?style=for-the-badge&labelColor=1a0a0a" /></td>
+<td>Your idea is part of the plot</td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/HYPE.bat-to_the_moon-ccff00?style=for-the-badge&labelColor=1a0a0a&color=0a0a0a" /></td>
+<td>Facts optional</td>
 </tr>
 </table>
 
 ---
 
-## Demo flow
+<div align="center">
 
-```mermaid
-sequenceDiagram
-  participant U as You
-  participant UI as CRT frontend
-  participant API as Flask
-  participant G as Groq ×4
+<img src="https://capsule-render.vercel.app/api?type=soft&color=0:111,100:111&height=40&section=header&text=under%20the%20hood&fontSize=18&fontColor=888888" width="60%" alt="" />
 
-  U->>UI: Type question
-  UI->>API: POST /api/getResponses
-  par Parallel
-    API->>G: Mom
-    API->>G: Hater
-    API->>G: Conspiracy
-    API->>G: Hype
-  end
-  G-->>API: 4 replies
-  API-->>UI: JSON results[]
-  UI->>U: Reveal + typewriter
-```
 
----
-
-## Architecture
-
-```mermaid
-flowchart LR
-  subgraph client ["Vercel · static"]
-    UI["frontend/index.html"]
-  end
-  subgraph server ["Render · Flask"]
-    R["/api/getResponses"]
-    TPE["ThreadPoolExecutor"]
-    R --> TPE
-  end
-  subgraph llm ["Groq"]
-    P1 & P2 & P3 & P4
-  end
-  UI --> R
-  TPE --> P1 & P2 & P3 & P4
-  P1 & P2 & P3 & P4 --> TPE --> UI
-```
+</div>
 
 <details>
-<summary><strong>Serious mode</strong> — <code>POST /council/debate</code> (4-stage pipeline + KB)</summary>
+<summary><b>Stack & deploy</b></summary>
 
-```mermaid
-flowchart LR
-  A["Psych brief"] --> B["Router"]
-  B --> C["4 × persona + kb_*.md"]
-  C --> D["Synthesis"]
-```
+<br/>
 
-Slower, structured advice (Marcus / Alex / Maya / Turing). See `frontend/cf/depth-ai-council-final.html` for the calmer UI iteration.
+| Layer | Tech |
+|-------|------|
+| UI | Vanilla HTML/CSS/JS + Tailwind CDN · Vercel |
+| API | Flask · Groq Llama 3.3 70B · Render |
+| Pattern | `ThreadPoolExecutor` × 4 · timeouts · fallbacks |
 
 </details>
 
----
+<details>
+<summary><b>Run locally</b></summary>
 
-## Personas
+<br/>
 
-| | Persona | Vibe |
-|:---:|:---|:---|
-| 💗 | **Worried Mom** | Everything is a health crisis |
-| 🔥 | **The Hater** | Two sentences, maximum damage |
-| 👁 | **Conspiracist** | Your idea is part of the plot |
-| ⚡ | **Hype Man** | To the moon, facts optional |
+```bash
+cd backend && pip install -r requirements.txt
+cp .env.example .env   # GROQ_API_KEY
+python app.py
+```
 
----
+```bash
+python -m http.server 8080   # repo root → redirects to frontend/
+```
 
-## Project structure
+`frontend/index.html` hits production Render by default — swap `fetch` to `http://localhost:5000/api/getResponses` for local API.
+
+</details>
+
+<details>
+<summary><b>Repo map</b></summary>
+
+<br/>
 
 ```
 mentor/
-├── demo.mp4 · demo.webp     # README media
-├── index.html               # → redirects to frontend/
-├── frontend/
-│   ├── index.html           # Roast Council (live)
-│   └── cf/                  # Serious-council prototypes
-├── backend/
-│   ├── app.py
-│   ├── persona.json
-│   └── kb_*.md
+├── frontend/index.html    ← the haunted OS (live)
+├── backend/app.py         ← parallel roast + debate pipeline
+├── demo.mp4 · demo.webp
 └── docs/
-    └── performance-notes.md
 ```
 
----
-
-## Local run
-
-**Backend**
-
-```bash
-cd backend
-pip install -r requirements.txt
-cp .env.example .env    # add GROQ_API_KEY
-python app.py           # http://localhost:5000
-```
-
-**Frontend** (repo root)
-
-```bash
-python -m http.server 8080
-```
-
-Open **http://localhost:8080/** → redirects to the app.
-
-> **API URL:** `frontend/index.html` points at the **production** Render host by default. For local API testing, set `fetch` to `http://localhost:5000/api/getResponses`.
-
-<details>
-<summary><strong>API reference</strong></summary>
-
-| Method | Path | Use |
-|--------|------|-----|
-| `POST` | `/api/getResponses` | Roast — fast, parallel |
-| `POST` | `/council/debate` | Full pipeline |
-| `GET` | `/health` | Status |
-| `GET` | `/usage` | Token budget |
+Serious mode prototype: `frontend/cf/depth-ai-council-final.html` · `POST /council/debate`
 
 </details>
 
 ---
 
-## Why it looks like this
+<div align="center">
 
-| Constraint | Design choice |
-|--------------|----------------|
-| Groq free tier | Short replies, single-shot, parallel batch |
-| No database | One question → four answers, then done |
-| Batch response (no SSE) | Fake boot + “malware” reveal instead of a spinner |
-| Render cold start | Boot sequence covers spin-up |
+<sub>
 
----
+Started as a multi-agent “council” app; rate limits + messy UX pushed it toward a single-screen roast terminal.<br/>
+Free-tier Groq + no DB → short replies, fake boot, 4th-wall hooks instead of chat history.
 
-## Story (short)
+</sub>
 
-Started as a **multi-turn mental-health council** with persistent memory. Hit **rate limits** and **UX overload** (four long agents at once). Pivoted to a **structured debate pipeline** (`/council/debate`), then shipped the **Roast Council** as the public face: same parallel backend pattern, UI that owns the chaos.
-
-Built as a **portfolio piece** — honest scope, live deploy, constraint-driven design — not enterprise cosplay.
+</div>
