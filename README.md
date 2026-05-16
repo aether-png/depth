@@ -9,10 +9,9 @@
 
 <!-- Poster loads instantly (~11 KB). Video (~6 MB) only when clicked — no spinner on README load. -->
 <a href="https://github.com/user-attachments/assets/fe68a8a8-42df-468a-845d-d45d26a3c447">
-  <img src="demo.webp" alt="Watch demo — click to play video" width="720"
-    style="max-width:100%; border-radius:8px; border:1px solid #33ff4144;" />
+ 
 </a>
-<p style="color:#71717a; font-size:0.85em;">Click image to play demo video</p>
+
 
 </div>
 
