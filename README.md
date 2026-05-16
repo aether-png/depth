@@ -1,94 +1,205 @@
-# Depth AI Council
+<h1 align="center">Depth AI Council</h1>
 
-A multi-agent reasoning system that runs any question through a 4-stage cognitive pipeline: psychological diagnosis → debate routing → parallel persona generation → synthesis.
+<p align="center">
+  <a href="https://depth-chi.vercel.app"><img src="https://img.shields.io/badge/▶_try_live-depth--chi.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white" alt="Live demo" /></a>
+  <img src="https://img.shields.io/badge/Groq-Llama_3.3_70B-f55036?style=for-the-badge" alt="Groq" />
+  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black" alt="Render" />
+</p>
 
-Live: [depth-chi.vercel.app](https://depth-chi.vercel.app) (frontend) / Render (backend)
+<p align="center">
+  <strong>Ask once → four AI personas roast you in parallel</strong><br/>
+  <sub>CRT terminal UI · hostile 4th-wall hooks · built around free-tier API limits</sub>
+</p>
+
+<br/>
+
+<p align="center">
+  <video src="demo.mp4" poster="demo.webp" width="720" autoplay loop muted playsinline
+    style="max-width: 100%; border-radius: 12px; border: 1px solid #27272a; box-shadow: 0 8px 32px rgba(0,0,0,.45);">
+    <a href="demo.mp4"><img src="demo.webp" alt="Depth AI Council demo" width="720" /></a>
+  </video>
+</p>
+
+<p align="center">
+  <a href="https://depth-chi.vercel.app"><strong>Open the live app →</strong></a>
+  &nbsp;·&nbsp;
+  <a href="#local-run">Run locally</a>
+  &nbsp;·&nbsp;
+  <a href="docs/performance-notes.md">Performance notes</a>
+</p>
 
 ---
 
-## Two Modes
+## At a glance
 
-### Serious Council
+<table>
+<tr>
+<td width="33%" valign="top">
 
-Four advisors with distinct, grounded philosophies respond to your question simultaneously, then a synthesis stage produces a 150-word consensus with concrete action steps.
+**Product**
 
-| Advisor | Lens |
-|---------|------|
-| **Marcus** | Risk and asymmetry (Taleb, skin in the game) |
-| **Alex** | Strategy and leverage (Thiel, zero-to-one thinking) |
-| **Maya** | Customer reality (Mom Test, what users actually want) |
-| **Turing** | Engineering clarity (Brooks, what to simplify or cut) |
+One-shot “Roast Council”: type a question, get four contradictory takes in a retro terminal — Mom, Hater, Conspiracist, Hype.
 
-### Roast Council
+</td>
+<td width="33%" valign="top">
 
-The same question, different panel: Worried Mom, The Hater, The Conspiracist, The Hype Man. Shorter responses, entirely different energy.
+**Engineering**
+
+`ThreadPoolExecutor` fires four Groq calls at once. Per-call timeouts, `max_tokens` caps, and fallbacks so one failure does not 500 the batch.
+
+</td>
+<td width="33%" valign="top">
+
+**UX**
+
+No streaming → loading is **designed** (boot, scanlines, malware reveal, typewriter). Idle/paste/DevTools hooks keep a stateless page feeling alive.
+
+</td>
+</tr>
+</table>
 
 ---
 
-## 4-Stage Pipeline
+## Demo flow
+
+```mermaid
+sequenceDiagram
+  participant U as You
+  participant UI as CRT frontend
+  participant API as Flask
+  participant G as Groq ×4
+
+  U->>UI: Type question
+  UI->>API: POST /api/getResponses
+  par Parallel
+    API->>G: Mom
+    API->>G: Hater
+    API->>G: Conspiracy
+    API->>G: Hype
+  end
+  G-->>API: 4 replies
+  API-->>UI: JSON results[]
+  UI->>U: Reveal + typewriter
+```
+
+---
+
+## Architecture
+
+```mermaid
+flowchart LR
+  subgraph client ["Vercel · static"]
+    UI["frontend/index.html"]
+  end
+  subgraph server ["Render · Flask"]
+    R["/api/getResponses"]
+    TPE["ThreadPoolExecutor"]
+    R --> TPE
+  end
+  subgraph llm ["Groq"]
+    P1 & P2 & P3 & P4
+  end
+  UI --> R
+  TPE --> P1 & P2 & P3 & P4
+  P1 & P2 & P3 & P4 --> TPE --> UI
+```
+
+<details>
+<summary><strong>Serious mode</strong> — <code>POST /council/debate</code> (4-stage pipeline + KB)</summary>
+
+```mermaid
+flowchart LR
+  A["Psych brief"] --> B["Router"]
+  B --> C["4 × persona + kb_*.md"]
+  C --> D["Synthesis"]
+```
+
+Slower, structured advice (Marcus / Alex / Maya / Turing). See `frontend/cf/depth-ai-council-final.html` for the calmer UI iteration.
+
+</details>
+
+---
+
+## Personas
+
+| | Persona | Vibe |
+|:---:|:---|:---|
+| 💗 | **Worried Mom** | Everything is a health crisis |
+| 🔥 | **The Hater** | Two sentences, maximum damage |
+| 👁 | **Conspiracist** | Your idea is part of the plot |
+| ⚡ | **Hype Man** | To the moon, facts optional |
+
+---
+
+## Project structure
 
 ```
-User question
-     │
-     ▼
-Stage 1 — Psychological Brief
-   Diagnoses the hidden fear behind the surface question.
-   Is this Validation Seeking? Fear of Failure? Identity Crisis?
-     │
-     ▼
-Stage 2 — Debate Router
-   Decides who speaks first, urgency level (1–10),
-   and the core tension the council should argue about.
-     │
-     ▼
-Stage 3 — Parallel Persona Generation
-   All 4 advisors run concurrently via ThreadPoolExecutor.
-   Each reads from a markdown knowledge base (Taleb, Mom Test,
-   Brooks, Thiel/Helmer) before responding.
-     │
-     ▼
-Stage 4 — Synthesis
-   A diplomatic summary acknowledging where advisors disagreed,
-   extracting what each was right about, and producing 3
-   time-bound action steps + 1 named pitfall.
+mentor/
+├── demo.mp4 · demo.webp     # README media
+├── index.html               # → redirects to frontend/
+├── frontend/
+│   ├── index.html           # Roast Council (live)
+│   └── cf/                  # Serious-council prototypes
+├── backend/
+│   ├── app.py
+│   ├── persona.json
+│   └── kb_*.md
+└── docs/
+    └── performance-notes.md
 ```
 
 ---
 
-## Stack
+## Local run
 
-- **Backend**: Flask + Groq (Llama 3.3 70B), deployed on Render
-- **Frontend**: Vanilla HTML/CSS/JS, deployed on Vercel
-- **Concurrency**: `ThreadPoolExecutor` for parallel LLM calls
-- **Knowledge bases**: Markdown files per advisor (strategy, risk, engineering, customer research)
-
----
-
-## Running Locally
+**Backend**
 
 ```bash
 cd backend
 pip install -r requirements.txt
-
-# Create .env
-echo "GROQ_API_KEY=your_key" > .env
-
-python app.py
-# Backend at http://localhost:5000
-
-# In another terminal, open frontend/index.html directly
-# or use: python -m http.server 3000 --directory ../frontend
+cp .env.example .env    # add GROQ_API_KEY
+python app.py           # http://localhost:5000
 ```
 
-API endpoints:
-- `POST /council/debate` — full 4-stage pipeline, returns all stages as JSON
-- `POST /api/getResponses` — Roast Council, fast parallel responses
-- `GET /health` — API + persona status check
+**Frontend** (repo root)
+
+```bash
+python -m http.server 8080
+```
+
+Open **http://localhost:8080/** → redirects to the app.
+
+> **API URL:** `frontend/index.html` points at the **production** Render host by default. For local API testing, set `fetch` to `http://localhost:5000/api/getResponses`.
+
+<details>
+<summary><strong>API reference</strong></summary>
+
+| Method | Path | Use |
+|--------|------|-----|
+| `POST` | `/api/getResponses` | Roast — fast, parallel |
+| `POST` | `/council/debate` | Full pipeline |
+| `GET` | `/health` | Status |
+| `GET` | `/usage` | Token budget |
+
+</details>
 
 ---
 
-## Why It Exists
+## Why it looks like this
 
-The original idea was more ambitious: a full council of AI agents each with persistent memory, disagreeing with each other across sessions. That hit API rate limits quickly and the UX was chaotic.
+| Constraint | Design choice |
+|--------------|----------------|
+| Groq free tier | Short replies, single-shot, parallel batch |
+| No database | One question → four answers, then done |
+| Batch response (no SSE) | Fake boot + “malware” reveal instead of a spinner |
+| Render cold start | Boot sequence covers spin-up |
 
-What shipped instead is more focused — one question, one session, four disciplined perspectives, one synthesis. The psychological brief stage is the part that actually changed how it felt to use: instead of getting four opinions on what you asked, you get four opinions on what you *meant* to ask.
+---
+
+## Story (short)
+
+Started as a **multi-turn mental-health council** with persistent memory. Hit **rate limits** and **UX overload** (four long agents at once). Pivoted to a **structured debate pipeline** (`/council/debate`), then shipped the **Roast Council** as the public face: same parallel backend pattern, UI that owns the chaos.
+
+Built as a **portfolio piece** — honest scope, live deploy, constraint-driven design — not enterprise cosplay.

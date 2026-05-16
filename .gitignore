@@ -1,4 +1,4 @@
-﻿# Secrets
+# Secrets
 .env
 *.env
 
@@ -7,12 +7,18 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Junk / test artifacts
+# Dev artifacts (internal, not for public repo)
 backend/output.txt
 backend/api_test_results.json
 backend/requirements_backup.txt
 frontend/index_backup_pre_os.html
 frontend/index_backup_v2.html
+frontend/cf/depth-backup-dec30/
+
+# Internal planning docs
+TOMORROW.md
+design.md
+startup.log
 
 # OS
 .DS_Store
